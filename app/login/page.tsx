@@ -42,14 +42,13 @@ export default function LoginPage() {
       setError("Email chưa đúng định dạng.");
       return;
     }
-    if (password.length < 6) {
-      setError("Mật khẩu cần có ít nhất 6 ký tự.");
+    if (password.length < 8) {
+      setError("Mật khẩu cần có ít nhất 8 ký tự.");
       return;
     }
 
     setLoading(true);
     try {
-      // TODO: nối với hệ thống đăng nhập của bạn (NextAuth, Supabase, API riêng...)
       const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -59,7 +58,7 @@ export default function LoginPage() {
         const data = await res.json().catch(() => null);
         throw new Error(data?.message || "Email hoặc mật khẩu không đúng.");
       }
-      router.push("/");
+      router.push("/account");
       router.refresh();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Không thể đăng nhập. Hãy thử lại.");

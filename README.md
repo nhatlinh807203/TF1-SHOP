@@ -1,4 +1,18 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TF1SHOP
+
+## Cấu hình đăng ký và đăng nhập
+
+1. Sao chép `.env.example` thành `.env.local`.
+2. Điền `MONGODB_URI` bằng URI MongoDB Atlas của bạn và đặt `MONGODB_DB=TF1SHOP`.
+3. Đặt `SESSION_SECRET` thành chuỗi bí mật ngẫu nhiên ít nhất 32 byte. Có thể tạo bằng `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`.
+4. Đặt `ADMIN_EMAIL` thành email muốn dùng cho tài khoản quản trị, sau đó đăng ký tài khoản bằng email đó. Không thể chọn vai trò từ biểu mẫu đăng ký; các tài khoản khác mặc định là `user`.
+5. Chạy `npm run dev`.
+
+Đăng ký yêu cầu họ tên, số điện thoại, email, địa chỉ và mật khẩu. Mật khẩu được băm trước khi lưu; phiên đăng nhập dùng cookie `HttpOnly`. Trang `/account` yêu cầu đăng nhập và `/admin` chỉ dành cho tài khoản có vai trò admin. Không đưa `.env.local` hoặc thông tin xác thực vào Git.
+
+Nếu Node.js báo `querySrv ECONNREFUSED` khi kết nối MongoDB Atlas, cấu hình `MONGODB_DNS_SERVERS` trong `.env.local` thành các địa chỉ DNS có thể phân giải bản ghi SRV trên mạng của bạn, phân tách bằng dấu phẩy, rồi khởi động lại máy chủ. Ví dụ: `MONGODB_DNS_SERVERS=1.1.1.1,8.8.8.8`. Đây là cấu hình tùy chọn; mặc định ứng dụng dùng DNS của Node.js.
+
+Nếu thông tin đăng nhập MongoDB đã được chia sẻ công khai, hãy đổi mật khẩu database trong MongoDB Atlas rồi cập nhật URI trong `.env.local`.
 
 ## Getting Started
 

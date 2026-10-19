@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Cinzel, Manrope } from "next/font/google";
-import { User, Mail, Lock, Eye, EyeOff, Loader2, AlertCircle, Check } from "lucide-react";
+import { User, Mail, Lock, Eye, EyeOff, Loader2, AlertCircle, Check, Phone, MapPin } from "lucide-react";
 
 const cinzel = Cinzel({ subsets: ["latin", "latin-ext"], weight: ["700"], display: "swap" });
 const manrope = Manrope({ subsets: ["latin", "vietnamese"], display: "swap" });
@@ -39,7 +39,9 @@ function getStrength(pw: string) {
 export default function RegisterPage() {
   const router = useRouter();
   const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -55,24 +57,28 @@ export default function RegisterPage() {
     setError("");
 
     if (name.trim().length < 2) return setError("Hãy nhập họ tên của bạn.");
+    if (!/^[+\d\s().-]+$/.test(phone.trim()) || phone.replace(/\D/g, "").length < 7) {
+      return setError("Số điện thoại chưa đúng định dạng.");
+    }
     if (!/^\S+@\S+\.\S+$/.test(email)) return setError("Email chưa đúng định dạng.");
+    if (address.trim().length < 5) return setError("Hãy nhập địa chỉ nhận hàng.");
     if (password.length < 8) return setError("Mật khẩu cần có ít nhất 8 ký tự.");
     if (password !== confirm) return setError("Mật khẩu xác nhận chưa khớp.");
     if (!agree) return setError("Bạn cần đồng ý với Điều khoản và Chính sách bảo mật.");
 
     setLoading(true);
     try {
-      // TODO: nối với hệ thống đăng ký của bạn (NextAuth, Supabase, API riêng...)
       const res = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: name.trim(), email, password }),
+        body: JSON.stringify({ name: name.trim(), phone: phone.trim(), email, address: address.trim(), password }),
       });
       if (!res.ok) {
         const data = await res.json().catch(() => null);
         throw new Error(data?.message || "Không thể tạo tài khoản. Email có thể đã được sử dụng.");
       }
-      router.push("/login");
+      router.push("/account");
+      router.refresh();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Đã có lỗi xảy ra. Hãy thử lại.");
     } finally {
@@ -149,6 +155,21 @@ export default function RegisterPage() {
               />
             </div>
 
+            {/* Số điện thoại */}
+            <div className="group relative">
+              <label htmlFor="phone" className="sr-only">Số điện thoại</label>
+              <Phone className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500 transition-colors group-focus-within:text-[#62c7d9]" />
+              <input
+                id="phone"
+                type="tel"
+                autoComplete="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="Số điện thoại"
+                className={inputClass}
+              />
+            </div>
+
             {/* Email */}
             <div className="group relative">
               <label htmlFor="email" className="sr-only">Email</label>
@@ -160,6 +181,21 @@ export default function RegisterPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
+                className={inputClass}
+              />
+            </div>
+
+            {/* Địa chỉ */}
+            <div className="group relative">
+              <label htmlFor="address" className="sr-only">Địa chỉ nhận hàng</label>
+              <MapPin className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500 transition-colors group-focus-within:text-[#62c7d9]" />
+              <input
+                id="address"
+                type="text"
+                autoComplete="street-address"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                placeholder="Địa chỉ nhận hàng"
                 className={inputClass}
               />
             </div>

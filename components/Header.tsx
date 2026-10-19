@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Cinzel, Manrope } from "next/font/google";
 import {
   Search,
@@ -15,6 +16,8 @@ import {
   X,
   User,
   Globe,
+  LogOut,
+  Shield,
 } from "lucide-react";
 
 // Tên shop: serif khắc La Mã. Phần còn lại: sans hiện đại, sạch.
@@ -30,12 +33,46 @@ const navItems = [
   { name: "Decks", href: "/decks", icon: Library },
 ];
 
+interface SessionUser {
+  name: string;
+  email: string;
+  role: "user" | "admin";
+}
+
 export default function Header() {
   const pathname = usePathname();
+  const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [openPath, setOpenPath] = useState<string | null>(null);
+  const open = openPath === pathname;
   const [stackCount] = useState(0); // thay bằng state/context giỏ hàng
+  const [sessionUser, setSessionUser] = useState<SessionUser | null>(null);
+  const [logoutError, setLogoutError] = useState("");
   const searchRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    let active = true;
+
+    async function loadSession() {
+      try {
+        const response = await fetch("/api/auth/session", { cache: "no-store" });
+        if (!response.ok) {
+          throw new Error(`Session request failed with status ${response.status}.`);
+        }
+        const data: { user: SessionUser | null } = await response.json();
+        if (active) {
+          setSessionUser(data.user);
+        }
+      } catch (error) {
+        console.error("Unable to load the signed-in user:", error);
+      }
+    }
+
+    void loadSession();
+    return () => {
+      active = false;
+    };
+  }, [pathname]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -57,9 +94,23 @@ export default function Header() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  useEffect(() => setOpen(false), [pathname]);
-
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + "/");
+
+  async function handleLogout() {
+    setLogoutError("");
+    try {
+      const response = await fetch("/api/auth/logout", { method: "POST" });
+      if (!response.ok) {
+        throw new Error(`Logout request failed with status ${response.status}.`);
+      }
+      setSessionUser(null);
+      router.push("/login");
+      router.refresh();
+    } catch (error) {
+      console.error("Unable to sign out:", error);
+      setLogoutError("Không thể đăng xuất. Vui lòng thử lại.");
+    }
+  }
 
   return (
     <header className={`${manrope.className} sticky top-0 z-50 w-full text-white`}>
@@ -163,12 +214,34 @@ export default function Header() {
             </button>
 
             <Link
-              href="/login"
-              className="hidden h-10 w-10 items-center justify-center rounded-full text-zinc-400 transition-colors hover:bg-white/5 hover:text-white sm:flex"
-              aria-label="Tài khoản"
+              href={sessionUser ? "/account" : "/login"}
+              className="hidden h-10 max-w-48 items-center justify-center gap-2 rounded-full px-3 text-zinc-400 transition-colors hover:bg-white/5 hover:text-white sm:flex"
+              aria-label={sessionUser ? `Tài khoản ${sessionUser.name}` : "Đăng nhập"}
             >
               <User className="h-[18px] w-[18px]" strokeWidth={1.75} />
+              {sessionUser && (
+                <span className="truncate text-sm">{sessionUser.name}</span>
+              )}
             </Link>
+            {sessionUser?.role === "admin" && (
+              <Link
+                href="/admin"
+                className="hidden h-10 items-center gap-1.5 rounded-full px-3 text-sm text-[#f0d68f] transition-colors hover:bg-white/5 sm:flex"
+              >
+                <Shield className="h-4 w-4" />
+                Admin
+              </Link>
+            )}
+            {sessionUser && (
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="hidden h-10 items-center gap-1.5 rounded-full px-3 text-sm text-zinc-400 transition-colors hover:bg-white/5 hover:text-white sm:flex"
+              >
+                <LogOut className="h-4 w-4" />
+                <span className="hidden lg:inline">Đăng xuất</span>
+              </button>
+            )}
 
             {/* Nút chính: vàng đặc, điểm nhấn duy nhất của header */}
             <Link
@@ -184,7 +257,7 @@ export default function Header() {
 
             <button
               type="button"
-              onClick={() => setOpen((v) => !v)}
+              onClick={() => setOpenPath(open ? null : pathname)}
               className="flex h-10 w-10 items-center justify-center rounded-full text-zinc-300 transition-colors hover:bg-white/5 md:hidden"
               aria-label={open ? "Đóng menu" : "Mở menu"}
               aria-expanded={open}
@@ -235,11 +308,22 @@ export default function Header() {
             ))}
             <div className="flex gap-2 pt-2">
               <Link
-                href="/account"
+                href={sessionUser ? "/account" : "/login"}
                 className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-white/[0.08] py-3 text-sm text-zinc-300"
               >
-                <User className="h-4 w-4" strokeWidth={1.75} /> Tài khoản
+                <User className="h-4 w-4 shrink-0" strokeWidth={1.75} />
+                <span className="truncate">
+                  {sessionUser ? sessionUser.name : "Tài khoản"}
+                </span>
               </Link>
+              {sessionUser?.role === "admin" && (
+                <Link
+                  href="/admin"
+                  className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-white/[0.08] py-3 text-sm text-[#f0d68f]"
+                >
+                  <Shield className="h-4 w-4" /> Admin
+                </Link>
+              )}
               <button
                 type="button"
                 className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-white/[0.08] py-3 text-sm text-zinc-300"
@@ -247,6 +331,20 @@ export default function Header() {
                 <Globe className="h-4 w-4" strokeWidth={1.75} /> EN
               </button>
             </div>
+            {sessionUser && (
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl border border-white/[0.08] py-3 text-sm text-zinc-300"
+              >
+                <LogOut className="h-4 w-4" /> Đăng xuất
+              </button>
+            )}
+            {logoutError && (
+              <p role="alert" className="mt-2 text-center text-sm text-red-300">
+                {logoutError}
+              </p>
+            )}
           </div>
         </div>
       </div>
