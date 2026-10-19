@@ -163,7 +163,7 @@ export default function Header() {
             </button>
 
             <Link
-              href="/account"
+              href="/login"
               className="hidden h-10 w-10 items-center justify-center rounded-full text-zinc-400 transition-colors hover:bg-white/5 hover:text-white sm:flex"
               aria-label="Tài khoản"
             >
