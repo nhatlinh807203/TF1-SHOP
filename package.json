@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
+    "google-auth-library": "^11.3.1",
     "jose": "^6.2.12",
     "lucide-react": "^1.57.0",
     "mongodb": "^7.7.0",

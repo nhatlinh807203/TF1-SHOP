@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 import Header from "@/components/Header";
+import HeaderWithSession from "@/components/HeaderWithSession";
 import Footer from "@/components/Footer";
 
 const geistSans = Geist({
@@ -31,7 +33,9 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <Header />
+        <Suspense fallback={<Header initialUser={null} />}>
+          <HeaderWithSession />
+        </Suspense>
         <main className="flex-1">{children}</main>
         <Footer />
       </body>

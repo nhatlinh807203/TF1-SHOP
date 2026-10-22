@@ -13,7 +13,7 @@ export interface UserDocument {
   phone: string;
   email: string;
   address: string;
-  passwordHash: string;
+  passwordHash?: string;
   role: UserRole;
   createdAt: Date;
 }

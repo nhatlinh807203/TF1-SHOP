@@ -52,7 +52,10 @@ export async function POST(request: Request) {
   try {
     const users = await getUsersCollection();
     const user = await users.findOne({ email });
-    if (!user || !(await bcrypt.compare(password, user.passwordHash))) {
+    if (
+      !user?.passwordHash ||
+      !(await bcrypt.compare(password, user.passwordHash))
+    ) {
       return NextResponse.json(
         { message: "Email hoặc mật khẩu không đúng." },
         { status: 401 },

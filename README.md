@@ -10,6 +10,13 @@
 
 Đăng ký yêu cầu họ tên, số điện thoại, email, địa chỉ và mật khẩu. Mật khẩu được băm trước khi lưu; phiên đăng nhập dùng cookie `HttpOnly`. Trang `/account` yêu cầu đăng nhập và `/admin` chỉ dành cho tài khoản có vai trò admin. Không đưa `.env.local` hoặc thông tin xác thực vào Git.
 
+### Đăng nhập Google
+
+1. Trong Google Cloud Console, tạo OAuth client loại **Web application**.
+2. Thêm `http://localhost:3000/api/auth/google/callback` vào **Authorized redirect URIs**.
+3. Điền `AUTH_GOOGLE_ID`, `AUTH_GOOGLE_SECRET` và `AUTH_GOOGLE_CALLBACK_URL` trong `.env.local`. Khi deploy, đặt callback URL thành `https://<tên-miền>/api/auth/google/callback` và thêm cùng URL vào danh sách redirect URI trong Google Cloud Console.
+4. Khởi động lại ứng dụng. Nút Google trên trang đăng nhập và đăng ký sẽ đưa người dùng qua Google; tài khoản mới được lưu trong MongoDB và đăng nhập ngay. Tài khoản Google dùng email đã xác minh; số điện thoại và địa chỉ có thể bổ sung sau.
+
 Nếu Node.js báo `querySrv ECONNREFUSED` khi kết nối MongoDB Atlas, cấu hình `MONGODB_DNS_SERVERS` trong `.env.local` thành các địa chỉ DNS có thể phân giải bản ghi SRV trên mạng của bạn, phân tách bằng dấu phẩy, rồi khởi động lại máy chủ. Ví dụ: `MONGODB_DNS_SERVERS=1.1.1.1,8.8.8.8`. Đây là cấu hình tùy chọn; mặc định ứng dụng dùng DNS của Node.js.
 
 Nếu thông tin đăng nhập MongoDB đã được chia sẻ công khai, hãy đổi mật khẩu database trong MongoDB Atlas rồi cập nhật URI trong `.env.local`.

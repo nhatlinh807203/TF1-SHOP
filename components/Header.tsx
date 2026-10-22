@@ -39,14 +39,18 @@ interface SessionUser {
   role: "user" | "admin";
 }
 
-export default function Header() {
+interface HeaderProps {
+  initialUser: SessionUser | null;
+}
+
+export default function Header({ initialUser }: HeaderProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [openPath, setOpenPath] = useState<string | null>(null);
   const open = openPath === pathname;
   const [stackCount] = useState(0); // thay bằng state/context giỏ hàng
-  const [sessionUser, setSessionUser] = useState<SessionUser | null>(null);
+  const [sessionUser, setSessionUser] = useState<SessionUser | null>(initialUser);
   const [logoutError, setLogoutError] = useState("");
   const searchRef = useRef<HTMLInputElement>(null);
 
@@ -215,12 +219,14 @@ export default function Header() {
 
             <Link
               href={sessionUser ? "/account" : "/login"}
-              className="hidden h-10 max-w-48 items-center justify-center gap-2 rounded-full px-3 text-zinc-400 transition-colors hover:bg-white/5 hover:text-white sm:flex"
+              className="flex h-10 max-w-32 items-center justify-center gap-2 rounded-full px-2 text-zinc-400 transition-colors hover:bg-white/5 hover:text-white sm:max-w-48 sm:px-3"
               aria-label={sessionUser ? `Tài khoản ${sessionUser.name}` : "Đăng nhập"}
             >
               <User className="h-[18px] w-[18px]" strokeWidth={1.75} />
               {sessionUser && (
-                <span className="truncate text-sm">{sessionUser.name}</span>
+                <span className="max-w-20 truncate text-xs sm:max-w-32 sm:text-sm">
+                  {sessionUser.name}
+                </span>
               )}
             </Link>
             {sessionUser?.role === "admin" && (

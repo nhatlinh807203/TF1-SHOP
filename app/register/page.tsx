@@ -310,13 +310,13 @@ export default function RegisterPage() {
             <span className="h-px flex-1 bg-white/[0.08]" />
           </div>
 
-          <button
-            type="button"
+          <a
+            href="/api/auth/google"
             className="flex h-11 w-full items-center justify-center gap-3 rounded-full border border-white/[0.1] bg-white/[0.03] text-sm font-medium text-zinc-200 transition-colors hover:border-white/20 hover:bg-white/[0.06]"
           >
             <GoogleIcon />
             Đăng ký với Google
-          </button>
+          </a>
         </div>
 
         <p className="mt-7 text-center text-sm text-zinc-500">
