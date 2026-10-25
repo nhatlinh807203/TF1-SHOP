@@ -545,10 +545,10 @@ export default function Home() {
               <span className="h-1.5 w-1.5 rounded-full bg-[#e5cb83] shadow-[0_0_10px_rgba(229,203,131,0.8)]" />
               DÀNH CHO NGƯỜI CHƠI & NHÀ SƯU TẦM
             </div>
-            <h1 className="mt-7 max-w-xl font-serif text-[3.25rem] font-medium leading-[1.03] tracking-[-0.045em] text-[#f5f1e7] sm:text-6xl lg:text-[5.25rem]">
+            <h1 className="mt-7 max-w-xl font-serif text-[clamp(2rem,9vw,3.75rem)] font-medium leading-[1.03] tracking-[-0.045em] text-[#f5f1e7] sm:text-6xl lg:text-[5.25rem]">
               Hoàn thiện bộ bài
               <br />
-              <span className="bg-gradient-to-r from-[#f3dfa0] via-[#d9b552] to-[#a77b27] bg-clip-text italic text-transparent">
+              <span className="whitespace-nowrap bg-gradient-to-r from-[#f3dfa0] via-[#d9b552] to-[#a77b27] bg-clip-text italic text-transparent sm:whitespace-normal">
                 nâng tầm sưu tập.
               </span>
             </h1>
@@ -557,32 +557,9 @@ export default function Home() {
               những điểm nhấn giá trị cho bộ sưu tập. Chọn quân bài tiếp theo,
               sẵn sàng cho ván đấu và hành trình sưu tầm của bạn cùng TF1SHOP.
             </p>
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <Link
-                href="#bo-suu-tap"
-                className="group inline-flex h-12 items-center gap-3 rounded-full bg-gradient-to-b from-[#f0d783] to-[#c79732] px-6 text-sm font-semibold text-[#211805] shadow-[0_8px_28px_-10px_rgba(212,165,55,0.55)] transition hover:brightness-110"
-              >
-                Khám phá cửa hàng
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-              <Link
-                href="/register"
-                className="inline-flex h-12 items-center gap-2 rounded-full border border-white/[0.12] px-5 text-sm font-medium text-zinc-200 transition hover:border-white/25 hover:bg-white/[0.04]"
-              >
-                Tham gia cộng đồng
-                <ArrowUpRight className="h-4 w-4 text-zinc-400" />
-              </Link>
-            </div>
             <Suspense fallback={null}>
               <HomeFeaturedProducts />
             </Suspense>
-            <a
-              href="#bo-suu-tap"
-              className="mt-12 inline-flex items-center gap-2 text-xs tracking-wide text-zinc-500 transition hover:text-zinc-300"
-            >
-              Cuộn để khám phá
-              <ArrowDown className="h-3.5 w-3.5" />
-            </a>
           </div>
         </div>
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#d4a537]/30 to-transparent" />

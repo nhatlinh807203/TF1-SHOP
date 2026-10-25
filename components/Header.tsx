@@ -285,7 +285,7 @@ export default function Header({ initialUser }: HeaderProps) {
 
       {/* Menu mobile */}
       <div
-        className={`grid bg-[#07090a]/95 backdrop-blur-xl transition-[grid-template-rows] duration-300 motion-reduce:transition-none         xl:hidden ${
+        className={`grid bg-[#07090a]/95 backdrop-blur-xl transition-[grid-template-rows] duration-300 motion-reduce:transition-none xl:hidden ${
           open ? "grid-rows-[1fr] border-b border-white/[0.06]" : "grid-rows-[0fr]"
         }`}
       >
