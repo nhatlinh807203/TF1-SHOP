@@ -1,8 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
+import { connection } from "next/server";
 import { Cinzel, Manrope } from "next/font/google";
 import type { SVGProps } from "react";
 import { Mail, ShieldCheck, Truck, PackageCheck, Headphones } from "lucide-react";
+import CurrentYear from "@/components/CurrentYear";
 
 // lucide-react bản mới đã bỏ icon thương hiệu, nên tự vẽ bằng SVG (cùng kiểu nét mảnh)
 const svgBase: SVGProps<SVGSVGElement> = {
@@ -88,7 +90,9 @@ const socials = [
   { name: "YouTube", href: "https://youtube.com", icon: Youtube },
 ];
 
-export default function Footer() {
+export default async function Footer() {
+  await connection();
+
   return (
     <footer className={`${manrope.className} relative bg-[#050607] text-zinc-400`}>
       {/* Đường vàng mảnh, cùng ngôn ngữ với header */}
@@ -195,7 +199,7 @@ export default function Footer() {
       {/* Thanh dưới cùng */}
       <div className="border-t border-white/[0.06]">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-4 py-6 text-xs text-zinc-600 sm:flex-row lg:px-6">
-          <p>© {new Date().getFullYear()} TF1SHOP. Bảo lưu mọi quyền.</p>
+          <p>© <CurrentYear /> TF1SHOP. Bảo lưu mọi quyền.</p>
           <div className="flex items-center gap-6">
             <Link href="/terms" className="transition-colors hover:text-[#f0d68f]">
               Điều khoản sử dụng

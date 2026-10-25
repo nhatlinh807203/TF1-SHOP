@@ -1,6 +1,6 @@
 import { timingSafeEqual } from "node:crypto";
 import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
+import { connection, NextResponse } from "next/server";
 import { createSessionToken, SESSION_COOKIE } from "@/lib/auth";
 import {
   getGoogleOAuthConfig,
@@ -33,12 +33,14 @@ function redirectToLogin(callbackUrl: string, reason: string) {
 }
 
 export async function GET(request: Request) {
+  await connection();
+  const requestUrl = new URL(request.url);
+
   let callbackUrl: string;
   try {
     const config = getGoogleOAuthConfig();
     callbackUrl = config.callbackUrl;
 
-    const requestUrl = new URL(request.url);
     const state = requestUrl.searchParams.get("state");
     const code = requestUrl.searchParams.get("code");
     const cookieStore = await cookies();

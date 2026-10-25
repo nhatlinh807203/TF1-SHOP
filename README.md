@@ -21,6 +21,18 @@ Nếu Node.js báo `querySrv ECONNREFUSED` khi kết nối MongoDB Atlas, cấu 
 
 Nếu thông tin đăng nhập MongoDB đã được chia sẻ công khai, hãy đổi mật khẩu database trong MongoDB Atlas rồi cập nhật URI trong `.env.local`.
 
+## Giỏ hàng, đặt hàng và email
+
+Giỏ hàng được lưu trong trình duyệt và số lượng được hiển thị trên nút giỏ hàng ở header. Trang `/stack` ban đầu chỉ hiển thị các sản phẩm và số lượng. Khi khách nhấn **Tiếp tục thanh toán**, server kiểm tra giá và tồn kho, tạo đơn và trừ kho trong MongoDB transaction; sau đó hiển thị thông tin nhận hàng, QR VietQR và liên kết Zalo hỗ trợ. Sản phẩm có trang chi tiết tại `/products/<product-id>`.
+
+Chỉ khi khách nhấn **Tôi đã chuyển khoản - xác nhận thanh toán**, hệ thống mới gửi email tiêu đề **CÓ ĐƠN ĐẶT HÀNG MỚI** kèm thông tin đơn đến hộp thư admin và gửi xác nhận cho khách hàng. Trạng thái chuyển khoản lúc này là khách đã báo, chưa phải xác nhận giao dịch ngân hàng. Trang quản trị `/admin/orders` cho admin kiểm tra giao dịch rồi xác nhận đã thanh toán; thao tác này gửi email xác nhận thanh toán thành công cho khách, đồng thời thông báo đơn đang chờ xử lý và giao hàng. Hệ thống không tự kiểm tra giao dịch ngân hàng.
+
+Để gửi email bằng Gmail, bật xác minh 2 bước cho tài khoản gửi và tạo Google App Password mới. Ứng dụng đọc `EMAIL_SERVICE`, `EMAIL_USER`, `EMAIL_PASS`; hai tên cũ `GMAIL_USER` và `GMAIL_APP_PASSWORD` vẫn được hỗ trợ nếu hai biến `EMAIL_*` chưa đặt. Hộp thư nhận đơn đặt bằng `ORDER_NOTIFICATION_EMAIL` (mặc định hộp thư cửa hàng trong `.env.example`). Sau khi sửa `.env.local`, khởi động lại máy chủ. Không ghi mật khẩu vào mã nguồn hoặc Git. Nếu thông tin xác thực từng được gửi trong chat hoặc nơi công khai, hãy thu hồi/thay mới chúng. MongoDB cần hỗ trợ transactions (ví dụ MongoDB Atlas replica set) để đặt hàng và cập nhật tồn kho nguyên tử.
+
+## Quản lý sản phẩm
+
+Đăng nhập bằng tài khoản admin. Các trang quản trị được chia riêng: `/admin/energies` để thêm/sửa/xóa năng lượng (tên và ảnh), `/admin/rarities` để quản lý các mức độ hiếm, `/admin/roles` để quản lý role (tên và ảnh), và `/admin/products` để quản lý sản phẩm. Khi tạo sản phẩm, chọn tối thiểu một và tối đa hai năng lượng đã tạo, đồng thời chọn một role; riêng thẻ bài cần chọn thêm một độ hiếm. Có thể nhập hashtag (phân tách bằng dấu phẩy), giá, tồn kho, mô tả và chọn ảnh sản phẩm từ thiết bị (JPG, PNG, WebP hoặc GIF, tối đa 5 MB). Ảnh sản phẩm là bắt buộc nếu bật hiển thị nổi bật. Năng lượng, role và độ hiếm không thể xóa khi đang được dùng bởi sản phẩm. Dữ liệu được lưu trong MongoDB. Bật **Hiển thị nổi bật trên banner trang chủ** và **Đang kinh doanh** để sản phẩm xuất hiện trong banner; tối đa bảy sản phẩm mới cập nhật có ảnh được hiển thị.
+
 ## Getting Started
 
 First, run the development server:

@@ -1,7 +1,22 @@
+import { Suspense } from "react";
 import Link from "next/link";
 import { requireUser } from "@/lib/auth";
 
 export default async function AccountPage() {
+  return (
+    <Suspense
+      fallback={
+        <section className="min-h-[60vh] bg-[#07090a] px-4 py-14 text-zinc-400 sm:py-20">
+          Đang tải thông tin tài khoản...
+        </section>
+      }
+    >
+      <AccountContent />
+    </Suspense>
+  );
+}
+
+async function AccountContent() {
   const user = await requireUser();
 
   return (

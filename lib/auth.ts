@@ -95,4 +95,14 @@ export async function requireAdmin(): Promise<UserProfile> {
   return user;
 }
 
+export async function getAdminUserForApi(): Promise<UserProfile | null> {
+  const session = await getSession();
+  if (!session) {
+    return null;
+  }
+
+  const user = await getUserById(session.id);
+  return user?.role === "admin" ? user : null;
+}
+
 export { SESSION_COOKIE, DAY_IN_SECONDS };

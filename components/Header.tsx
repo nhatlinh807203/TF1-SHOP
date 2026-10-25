@@ -6,6 +6,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { Cinzel, Manrope } from "next/font/google";
+import { useCart } from "@/components/CartProvider";
 import {
   Search,
   Layers,
@@ -49,7 +50,7 @@ export default function Header({ initialUser }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
   const [openPath, setOpenPath] = useState<string | null>(null);
   const open = openPath === pathname;
-  const [stackCount] = useState(0); // thay bằng state/context giỏ hàng
+  const { itemCount } = useCart();
   const [sessionUser, setSessionUser] = useState<SessionUser | null>(initialUser);
   const [logoutError, setLogoutError] = useState("");
   const searchRef = useRef<HTMLInputElement>(null);
@@ -121,7 +122,7 @@ export default function Header({ initialUser }: HeaderProps) {
       {/* Thanh thông báo: tự thu lại khi cuộn */}
       {ANNOUNCEMENT && (
         <div
-          className={`overflow-hidden bg-[#0d1112] text-center text-xs tracking-wide text-[#d9bd73] transition-[height] duration-300 motion-reduce:transition-none ${
+          className={`overflow-hidden bg-[#0d1112] text-center text-[10px] tracking-wide text-[#d9bd73] transition-[height] duration-300 motion-reduce:transition-none sm:text-xs ${
             scrolled ? "h-0" : "h-8"
           }`}
         >
@@ -138,15 +139,15 @@ export default function Header({ initialUser }: HeaderProps) {
         }`}
       >
         <div
-          className={`mx-auto flex max-w-7xl items-center gap-5 px-4 transition-[height] duration-300 motion-reduce:transition-none lg:gap-8 lg:px-6 ${
+          className={`mx-auto flex max-w-7xl items-center gap-2 px-3 transition-[height] duration-300 motion-reduce:transition-none sm:gap-4 sm:px-4 lg:gap-8 lg:px-6 ${
             scrolled ? "h-16" : "h-[72px]"
           }`}
         >
           {/* Logo + wordmark */}
-          <Link href="/" className="group flex shrink-0 items-center gap-3.5" aria-label="TF1SHOP - Trang chủ">
+          <Link href="/" className="group flex shrink-0 items-center gap-2 sm:gap-3.5" aria-label="TF1SHOP - Trang chủ">
             <div
               className={`relative overflow-hidden rounded-xl ring-1 ring-[#d4a537]/50 ring-offset-2 ring-offset-[#07090a] transition-all duration-300 group-hover:ring-[#62c7d9]/70 group-hover:shadow-[0_0_22px_rgba(98,199,217,0.35)] ${
-                scrolled ? "h-10 w-10" : "h-11 w-11"
+                scrolled ? "h-9 w-9 sm:h-10 sm:w-10" : "h-10 w-10 sm:h-11 sm:w-11"
               }`}
             >
               <Image
@@ -160,7 +161,7 @@ export default function Header({ initialUser }: HeaderProps) {
             </div>
             <span
               className={`${cinzel.className} bg-gradient-to-b from-[#fcefbd] via-[#e2bb52] to-[#b3841f] bg-clip-text font-bold leading-none tracking-[0.14em] text-transparent transition-[font-size] duration-300 ${
-                scrolled ? "text-[1.4rem]" : "text-[1.6rem]"
+                scrolled ? "text-[1.1rem] sm:text-[1.4rem]" : "text-[1.2rem] sm:text-[1.6rem]"
               }`}
             >
               TF1SHOP
@@ -169,7 +170,7 @@ export default function Header({ initialUser }: HeaderProps) {
 
           {/* Nav dạng viên thuốc */}
           <nav
-            className="hidden items-center gap-1 rounded-full border border-white/[0.07] bg-white/[0.03] p-1 md:flex"
+            className="hidden items-center gap-1 rounded-full border border-white/[0.07] bg-white/[0.03] p-1 xl:flex"
             aria-label="Điều hướng chính"
           >
             {navItems.map(({ name, href }) => {
@@ -192,7 +193,7 @@ export default function Header({ initialUser }: HeaderProps) {
           </nav>
 
           {/* Tìm kiếm */}
-          <form role="search" action="/singles" className="group relative ml-auto hidden max-w-md flex-1 lg:block">
+          <form role="search" action="/singles" className="group relative ml-auto hidden max-w-md flex-1 xl:block">
             <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500 transition-colors group-focus-within:text-[#62c7d9]" />
             <input
               ref={searchRef}
@@ -207,10 +208,10 @@ export default function Header({ initialUser }: HeaderProps) {
           </form>
 
           {/* Hành động */}
-          <div className="ml-auto flex items-center gap-1.5 lg:ml-0">
+          <div className="ml-auto flex shrink-0 items-center gap-0.5 sm:gap-1.5 xl:ml-0">
             <button
               type="button"
-              className="hidden h-10 items-center gap-1.5 rounded-full px-3 text-sm text-zinc-400 transition-colors hover:bg-white/5 hover:text-white sm:flex"
+              className="hidden h-10 items-center gap-1.5 rounded-full px-3 text-sm text-zinc-400 transition-colors hover:bg-white/5 hover:text-white xl:flex"
               aria-label="Đổi ngôn ngữ"
             >
               <Globe className="h-4 w-4" strokeWidth={1.75} />
@@ -219,12 +220,12 @@ export default function Header({ initialUser }: HeaderProps) {
 
             <Link
               href={sessionUser ? "/account" : "/login"}
-              className="flex h-10 max-w-32 items-center justify-center gap-2 rounded-full px-2 text-zinc-400 transition-colors hover:bg-white/5 hover:text-white sm:max-w-48 sm:px-3"
+              className="flex h-9 w-9 items-center justify-center rounded-full p-0 text-zinc-400 transition-colors hover:bg-white/5 hover:text-white sm:h-10 sm:w-auto sm:px-2 xl:max-w-48 xl:gap-2 xl:px-3"
               aria-label={sessionUser ? `Tài khoản ${sessionUser.name}` : "Đăng nhập"}
             >
               <User className="h-[18px] w-[18px]" strokeWidth={1.75} />
               {sessionUser && (
-                <span className="max-w-20 truncate text-xs sm:max-w-32 sm:text-sm">
+                <span className="hidden max-w-32 truncate text-sm xl:inline">
                   {sessionUser.name}
                 </span>
               )}
@@ -232,7 +233,7 @@ export default function Header({ initialUser }: HeaderProps) {
             {sessionUser?.role === "admin" && (
               <Link
                 href="/admin"
-                className="hidden h-10 items-center gap-1.5 rounded-full px-3 text-sm text-[#f0d68f] transition-colors hover:bg-white/5 sm:flex"
+                className="hidden h-10 items-center gap-1.5 rounded-full px-3 text-sm text-[#f0d68f] transition-colors hover:bg-white/5 xl:flex"
               >
                 <Shield className="h-4 w-4" />
                 Admin
@@ -242,7 +243,7 @@ export default function Header({ initialUser }: HeaderProps) {
               <button
                 type="button"
                 onClick={handleLogout}
-                className="hidden h-10 items-center gap-1.5 rounded-full px-3 text-sm text-zinc-400 transition-colors hover:bg-white/5 hover:text-white sm:flex"
+                className="hidden h-10 items-center gap-1.5 rounded-full px-3 text-sm text-zinc-400 transition-colors hover:bg-white/5 hover:text-white xl:flex"
               >
                 <LogOut className="h-4 w-4" />
                 <span className="hidden lg:inline">Đăng xuất</span>
@@ -252,19 +253,20 @@ export default function Header({ initialUser }: HeaderProps) {
             {/* Nút chính: vàng đặc, điểm nhấn duy nhất của header */}
             <Link
               href="/stack"
-              className="group/stack ml-1 flex h-10 items-center gap-2 rounded-full bg-gradient-to-b from-[#ecd07a] to-[#c9972a] pl-4 pr-1.5 text-sm font-semibold text-[#1a1205] shadow-[0_0_0_1px_rgba(255,236,170,0.35)_inset,0_6px_18px_-6px_rgba(212,165,55,0.6)] transition hover:brightness-110 active:scale-[0.98]"
+              aria-label={`Giỏ hàng, ${itemCount} sản phẩm`}
+              className="group/stack flex h-9 items-center gap-1 rounded-full bg-gradient-to-b from-[#ecd07a] to-[#c9972a] px-1.5 text-sm font-semibold text-[#1a1205] shadow-[0_0_0_1px_rgba(255,236,170,0.35)_inset,0_6px_18px_-6px_rgba(212,165,55,0.6)] transition hover:brightness-110 active:scale-[0.98] sm:ml-1 sm:h-10 sm:gap-2 sm:pl-4 sm:pr-1.5"
             >
               <Layers className="h-4 w-4" strokeWidth={2} />
-              <span className="hidden sm:inline">Stack</span>
-              <span className="flex h-7 min-w-7 items-center justify-center rounded-full bg-[#1a1205]/90 px-2 text-xs font-bold tabular-nums text-[#f0d68f]">
-                {stackCount}
+              <span className="hidden sm:inline">Giỏ hàng</span>
+              <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-[#1a1205]/90 px-1.5 text-xs font-bold tabular-nums text-[#f0d68f] sm:h-7 sm:min-w-7 sm:px-2">
+                {itemCount}
               </span>
             </Link>
 
             <button
               type="button"
               onClick={() => setOpenPath(open ? null : pathname)}
-              className="flex h-10 w-10 items-center justify-center rounded-full text-zinc-300 transition-colors hover:bg-white/5 md:hidden"
+              className="flex h-9 w-9 items-center justify-center rounded-full text-zinc-300 transition-colors hover:bg-white/5 xl:hidden sm:h-10 sm:w-10"
               aria-label={open ? "Đóng menu" : "Mở menu"}
               aria-expanded={open}
             >
@@ -283,7 +285,7 @@ export default function Header({ initialUser }: HeaderProps) {
 
       {/* Menu mobile */}
       <div
-        className={`grid bg-[#07090a]/95 backdrop-blur-xl transition-[grid-template-rows] duration-300 motion-reduce:transition-none md:hidden ${
+        className={`grid bg-[#07090a]/95 backdrop-blur-xl transition-[grid-template-rows] duration-300 motion-reduce:transition-none         xl:hidden ${
           open ? "grid-rows-[1fr] border-b border-white/[0.06]" : "grid-rows-[0fr]"
         }`}
       >

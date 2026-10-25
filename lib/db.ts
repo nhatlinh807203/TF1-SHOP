@@ -1,5 +1,6 @@
 import { Resolver } from "node:dns/promises";
 import {
+  Binary,
   MongoClient,
   MongoServerError,
   ObjectId,
@@ -7,6 +8,7 @@ import {
 } from "mongodb";
 
 export type UserRole = "user" | "admin";
+export type ProductType = "box" | "pack" | "card";
 
 export interface UserDocument {
   name: string;
@@ -18,10 +20,81 @@ export interface UserDocument {
   createdAt: Date;
 }
 
+export interface ProductDocument {
+  name: string;
+  type: ProductType;
+  description: string;
+  energyIds?: string[];
+  roleId?: string | null;
+  rarityId?: string | null;
+  hashtags?: string[];
+  price: number;
+  stock: number;
+  imageUrl?: string;
+  imageData?: Binary;
+  imageContentType?: string;
+  featured: boolean;
+  active: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface EnergyDocument {
+  name: string;
+  imageData: Binary;
+  imageContentType: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface RoleDocument {
+  name: string;
+  imageData: Binary;
+  imageContentType: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface RarityDocument {
+  name: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface OrderItemDocument {
+  productId: string;
+  name: string;
+  quantity: number;
+  unitPrice: number;
+  lineTotal: number;
+}
+
+export interface OrderDocument {
+  userId: ObjectId;
+  customer: {
+    name: string;
+    email: string;
+    phone: string;
+    address: string;
+  };
+  items: OrderItemDocument[];
+  total: number;
+  status: "confirmed";
+  paymentStatus?: "pending" | "reported" | "paid";
+  paymentReportedAt?: Date;
+  paymentNotificationStatus?: "sent" | "failed";
+  paymentConfirmationEmailStatus?: "sent" | "failed";
+  emailStatus?: "sent" | "failed";
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export type UserProfile = Pick<
   UserDocument,
   "name" | "phone" | "email" | "address" | "role" | "createdAt"
 > & { _id: ObjectId };
+
+export type ProductProfile = ProductDocument & { _id: ObjectId };
 
 const globalForMongo = globalThis as typeof globalThis & {
   mongoClientPromise?: Promise<MongoClient>;
@@ -100,7 +173,7 @@ async function createMongoClient(
   return new MongoClient(connectionString);
 }
 
-export async function getUsersCollection(): Promise<Collection<UserDocument>> {
+async function getMongoClient(): Promise<MongoClient> {
   const uri = process.env.MONGODB_URI;
   if (!uri) {
     throw new Error("MONGODB_URI is not configured.");
@@ -126,8 +199,21 @@ export async function getUsersCollection(): Promise<Collection<UserDocument>> {
     });
   }
 
-  const client = await globalForMongo.mongoClientPromise;
-  const database = client.db(process.env.MONGODB_DB || "TF1SHOP");
+  return globalForMongo.mongoClientPromise;
+}
+
+async function getDatabase() {
+  const client = await getMongoClient();
+  return client.db(process.env.MONGODB_DB || "TF1SHOP");
+}
+
+export async function startDatabaseSession() {
+  const client = await getMongoClient();
+  return client.startSession();
+}
+
+export async function getUsersCollection(): Promise<Collection<UserDocument>> {
+  const database = await getDatabase();
   const users = database.collection<UserDocument>("users");
 
   if (!emailIndexPromise) {
@@ -142,6 +228,31 @@ export async function getUsersCollection(): Promise<Collection<UserDocument>> {
   }
 
   return users;
+}
+
+export async function getProductsCollection(): Promise<Collection<ProductDocument>> {
+  const database = await getDatabase();
+  return database.collection<ProductDocument>("products");
+}
+
+export async function getEnergiesCollection(): Promise<Collection<EnergyDocument>> {
+  const database = await getDatabase();
+  return database.collection<EnergyDocument>("energies");
+}
+
+export async function getRolesCollection(): Promise<Collection<RoleDocument>> {
+  const database = await getDatabase();
+  return database.collection<RoleDocument>("roles");
+}
+
+export async function getRaritiesCollection(): Promise<Collection<RarityDocument>> {
+  const database = await getDatabase();
+  return database.collection<RarityDocument>("rarities");
+}
+
+export async function getOrdersCollection(): Promise<Collection<OrderDocument>> {
+  const database = await getDatabase();
+  return database.collection<OrderDocument>("orders");
 }
 
 export async function getUserById(id: string): Promise<UserProfile | null> {
