@@ -22,7 +22,7 @@ async function AccountContent() {
   return (
     <section className="min-h-[60vh] bg-[#07090a] px-4 py-14 text-white sm:py-20">
       <div className="mx-auto max-w-2xl rounded-3xl border border-white/[0.08] bg-[#0a0d0e] p-6 sm:p-9">
-        <p className="text-sm font-medium text-[#e2bb52]">TÀI KHOẢN TF1SHOP</p>
+        <p className="text-sm font-medium text-[#e2bb52]">TÀI KHOẢN HOLOVAULT</p>
         <h1 className="mt-2 text-2xl font-bold">Xin chào, {user.name}</h1>
         <dl className="mt-8 grid gap-5 text-sm sm:grid-cols-2">
           <div>

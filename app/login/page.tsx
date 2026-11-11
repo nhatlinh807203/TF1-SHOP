@@ -75,14 +75,14 @@ export default function LoginPage() {
 
       <div className="relative mx-auto flex max-w-md flex-col items-center px-4 py-14 md:py-20">
         {/* Logo */}
-        <Link href="/" aria-label="TF1SHOP - Trang chủ" className="group flex flex-col items-center gap-4">
+        <Link href="/" aria-label="Holovault - Trang chủ" className="group flex flex-col items-center gap-4">
           <div className="relative h-16 w-16 overflow-hidden rounded-2xl ring-1 ring-[#d4a537]/50 ring-offset-2 ring-offset-[#07090a] transition-all duration-300 group-hover:ring-[#62c7d9]/70 group-hover:shadow-[0_0_26px_rgba(98,199,217,0.35)]">
-            <Image src="/images/tf1logo.jpg" alt="" fill sizes="64px" className="object-cover" priority />
+            <Image src="/images/holovault.jpg" alt="" fill sizes="64px" className="object-cover" priority />
           </div>
           <span
             className={`${cinzel.className} bg-gradient-to-b from-[#fcefbd] via-[#e2bb52] to-[#b3841f] bg-clip-text text-2xl font-bold leading-none tracking-[0.14em] text-transparent`}
           >
-            TF1SHOP
+            HOLOVAULT
           </span>
         </Link>
 

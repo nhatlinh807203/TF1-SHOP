@@ -6,6 +6,7 @@ import {
   ObjectId,
   type Collection,
 } from "mongodb";
+import type { ProductGame } from "@/lib/product-games";
 
 export type UserRole = "user" | "admin";
 export type ProductType = "box" | "pack" | "card";
@@ -23,6 +24,7 @@ export interface UserDocument {
 export interface ProductDocument {
   name: string;
   type: ProductType;
+  game?: ProductGame | null;
   description: string;
   energyIds?: string[];
   roleId?: string | null;
@@ -33,6 +35,19 @@ export interface ProductDocument {
   imageUrl?: string;
   imageData?: Binary;
   imageContentType?: string;
+  riftbound?: {
+    printingId: string;
+    cardId: string;
+    cardName: string;
+    setSlug: string;
+    setId: string;
+    setName: string;
+    collectorNumber: string;
+    rarity: string;
+    faction: string;
+    tcgplayerPriceUsd: number | null;
+    marketPriceUpdatedAt: Date;
+  };
   featured: boolean;
   active: boolean;
   createdAt: Date;

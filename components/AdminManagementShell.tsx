@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   Bell,
@@ -9,10 +10,7 @@ import {
   LogOut,
   Package,
   ShoppingBag,
-  Sparkles,
-  Tags,
   Users,
-  Zap,
 } from "lucide-react";
 
 interface AdminManagementShellProps {
@@ -27,9 +25,6 @@ interface AdminManagementShellProps {
 const navigation = [
   { label: "Tổng quan", href: "/admin", icon: LayoutDashboard },
   { label: "Sản phẩm", href: "/admin/products", icon: Package },
-  { label: "Năng lượng", href: "/admin/energies", icon: Zap },
-  { label: "Độ hiếm", href: "/admin/rarities", icon: Sparkles },
-  { label: "Role", href: "/admin/roles", icon: Tags },
   { label: "Đơn hàng", href: "/admin/orders", icon: ShoppingBag },
   { label: "Khách hàng", href: "/admin#customers", icon: Users },
 ];
@@ -57,11 +52,11 @@ export default function AdminManagementShell({
           href="/"
           className="flex h-[76px] items-center gap-3 border-b border-white/[0.06] px-6"
         >
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#f0d68f] to-[#bd8720] text-sm font-black text-[#1a1205]">
-            T
+          <span className="relative h-9 w-9 overflow-hidden rounded-xl">
+            <Image src="/images/holovault.jpg" alt="" fill sizes="36px" className="object-cover" />
           </span>
           <span className="text-sm font-bold tracking-[0.16em] text-[#f0d68f]">
-            TF1SHOP
+            HOLOVAULT
           </span>
         </Link>
 
@@ -114,7 +109,7 @@ export default function AdminManagementShell({
               href="/"
               className="text-sm font-bold tracking-[0.12em] text-[#f0d68f] lg:hidden"
             >
-              TF1SHOP
+              HOLOVAULT
             </Link>
             <span className="hidden h-5 w-px bg-white/10 lg:block" />
             <p className="text-sm text-zinc-400">{title}</p>

@@ -122,7 +122,7 @@ export default function Header({ initialUser }: HeaderProps) {
       {/* Thanh thông báo: tự thu lại khi cuộn */}
       {ANNOUNCEMENT && (
         <div
-          className={`overflow-hidden bg-[#0d1112] text-center text-[10px] tracking-wide text-[#d9bd73] transition-[height] duration-300 motion-reduce:transition-none sm:text-xs ${
+          className={`overflow-hidden bg-[#202020] text-center text-[10px] tracking-wide text-cyan-100 transition-[height] duration-300 motion-reduce:transition-none sm:text-xs ${
             scrolled ? "h-0" : "h-8"
           }`}
         >
@@ -134,8 +134,8 @@ export default function Header({ initialUser }: HeaderProps) {
       <div
         className={`relative border-b border-white/[0.06] transition-colors duration-300 motion-reduce:transition-none ${
           scrolled
-            ? "bg-[#07090a]/80 shadow-[0_12px_32px_-12px_rgba(0,0,0,0.8)] backdrop-blur-xl"
-            : "bg-[#07090a]"
+            ? "bg-[#1b1b1b]/90 shadow-[0_12px_32px_-12px_rgba(0,0,0,0.8)] backdrop-blur-xl"
+            : "bg-[#1b1b1b]"
         }`}
       >
         <div
@@ -144,14 +144,14 @@ export default function Header({ initialUser }: HeaderProps) {
           }`}
         >
           {/* Logo + wordmark */}
-          <Link href="/" className="group flex shrink-0 items-center gap-2 sm:gap-3.5" aria-label="TF1SHOP - Trang chủ">
+          <Link href="/" className="group flex shrink-0 items-center gap-2 sm:gap-3.5" aria-label="Holovault - Trang chủ">
             <div
-              className={`relative overflow-hidden rounded-xl ring-1 ring-[#d4a537]/50 ring-offset-2 ring-offset-[#07090a] transition-all duration-300 group-hover:ring-[#62c7d9]/70 group-hover:shadow-[0_0_22px_rgba(98,199,217,0.35)] ${
+              className={`relative overflow-hidden rounded-xl ring-1 ring-white/15 ring-offset-2 ring-offset-[#1b1b1b] transition-all duration-300 group-hover:ring-[#12c6df]/70 group-hover:shadow-[0_0_22px_rgba(18,198,223,0.35)] ${
                 scrolled ? "h-9 w-9 sm:h-10 sm:w-10" : "h-10 w-10 sm:h-11 sm:w-11"
               }`}
             >
               <Image
-                src="/images/tf1logo.jpg"
+                src="/images/holovault.jpg"
                 alt=""
                 fill
                 sizes="44px"
@@ -160,11 +160,11 @@ export default function Header({ initialUser }: HeaderProps) {
               />
             </div>
             <span
-              className={`${cinzel.className} bg-gradient-to-b from-[#fcefbd] via-[#e2bb52] to-[#b3841f] bg-clip-text font-bold leading-none tracking-[0.14em] text-transparent transition-[font-size] duration-300 ${
+              className={`${cinzel.className} bg-gradient-to-r from-white via-cyan-100 to-[#64e6f4] bg-clip-text font-bold leading-none tracking-[0.14em] text-transparent transition-[font-size] duration-300 ${
                 scrolled ? "text-[1.1rem] sm:text-[1.4rem]" : "text-[1.2rem] sm:text-[1.6rem]"
               }`}
             >
-              TF1SHOP
+              HOLOVAULT
             </span>
           </Link>
 
@@ -182,7 +182,7 @@ export default function Header({ initialUser }: HeaderProps) {
                   aria-current={active ? "page" : undefined}
                   className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
                     active
-                      ? "bg-gradient-to-b from-[#d4a537]/25 to-[#d4a537]/10 text-[#f0d68f] ring-1 ring-inset ring-[#d4a537]/40"
+                      ? "bg-cyan-100/[0.08] text-cyan-100 ring-1 ring-inset ring-cyan-100/20"
                       : "text-zinc-400 hover:text-white"
                   }`}
                 >
@@ -233,7 +233,7 @@ export default function Header({ initialUser }: HeaderProps) {
             {sessionUser?.role === "admin" && (
               <Link
                 href="/admin"
-                className="hidden h-10 items-center gap-1.5 rounded-full px-3 text-sm text-[#f0d68f] transition-colors hover:bg-white/5 xl:flex"
+                className="hidden h-10 items-center gap-1.5 rounded-full px-3 text-sm text-cyan-100 transition-colors hover:bg-white/5 xl:flex"
               >
                 <Shield className="h-4 w-4" />
                 Admin
@@ -254,11 +254,11 @@ export default function Header({ initialUser }: HeaderProps) {
             <Link
               href="/stack"
               aria-label={`Giỏ hàng, ${itemCount} sản phẩm`}
-              className="group/stack flex h-9 items-center gap-1 rounded-full bg-gradient-to-b from-[#ecd07a] to-[#c9972a] px-1.5 text-sm font-semibold text-[#1a1205] shadow-[0_0_0_1px_rgba(255,236,170,0.35)_inset,0_6px_18px_-6px_rgba(212,165,55,0.6)] transition hover:brightness-110 active:scale-[0.98] sm:ml-1 sm:h-10 sm:gap-2 sm:pl-4 sm:pr-1.5"
+              className="group/stack flex h-9 items-center gap-1 rounded-full bg-gradient-to-r from-[#12c6df] to-[#64e6f4] px-1.5 text-sm font-bold text-[#07191c] shadow-[0_6px_22px_-8px_rgba(18,198,223,0.65)] transition hover:brightness-110 active:scale-[0.98] sm:ml-1 sm:h-10 sm:gap-2 sm:pl-4 sm:pr-1.5"
             >
               <Layers className="h-4 w-4" strokeWidth={2} />
               <span className="hidden sm:inline">Giỏ hàng</span>
-              <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-[#1a1205]/90 px-1.5 text-xs font-bold tabular-nums text-[#f0d68f] sm:h-7 sm:min-w-7 sm:px-2">
+              <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-[#1b1b1b]/90 px-1.5 text-xs font-bold tabular-nums text-white sm:h-7 sm:min-w-7 sm:px-2">
                 {itemCount}
               </span>
             </Link>
@@ -277,7 +277,7 @@ export default function Header({ initialUser }: HeaderProps) {
 
         {/* Đường vàng mảnh ở đáy, chỉ hiện khi cuộn */}
         <div
-          className={`pointer-events-none absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-[#d4a537]/50 to-transparent transition-opacity duration-300 ${
+          className={`pointer-events-none absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-cyan-100/40 to-transparent transition-opacity duration-300 ${
             scrolled ? "opacity-100" : "opacity-0"
           }`}
         />
@@ -285,7 +285,7 @@ export default function Header({ initialUser }: HeaderProps) {
 
       {/* Menu mobile */}
       <div
-        className={`grid bg-[#07090a]/95 backdrop-blur-xl transition-[grid-template-rows] duration-300 motion-reduce:transition-none xl:hidden ${
+        className={`grid bg-[#1b1b1b]/95 backdrop-blur-xl transition-[grid-template-rows] duration-300 motion-reduce:transition-none xl:hidden ${
           open ? "grid-rows-[1fr] border-b border-white/[0.06]" : "grid-rows-[0fr]"
         }`}
       >
@@ -306,7 +306,7 @@ export default function Header({ initialUser }: HeaderProps) {
                 href={href}
                 className={`flex items-center gap-3 rounded-xl px-3.5 py-3 text-sm font-medium transition-colors ${
                   isActive(href)
-                    ? "bg-[#d4a537]/10 text-[#f0d68f] ring-1 ring-inset ring-[#d4a537]/30"
+                    ? "bg-cyan-100/[0.08] text-cyan-100 ring-1 ring-inset ring-cyan-100/20"
                     : "text-zinc-300 hover:bg-white/5"
                 }`}
               >

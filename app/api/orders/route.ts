@@ -161,6 +161,12 @@ export async function POST(request: Request) {
             409,
           );
         }
+        if (product.type === "card") {
+          throw new OrderRequestError(
+            "Giá thẻ bài chỉ mang tính tham khảo. Vui lòng liên hệ cửa hàng để xác nhận giá và đặt mua.",
+            409,
+          );
+        }
         if (product.stock < item.quantity) {
           throw new OrderRequestError(
             `Sản phẩm "${product.name}" không đủ số lượng tồn kho.`,

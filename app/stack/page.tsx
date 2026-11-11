@@ -9,11 +9,11 @@ export default function StackPage() {
     <section className="min-h-[60vh] bg-[#090b0c] px-4 py-12 text-white sm:px-6 sm:py-16">
       <div className="mx-auto max-w-6xl">
         <p className="text-xs font-semibold tracking-[0.2em] text-[#d9b754]">
-          TF1SHOP
+          HOLOVAULT
         </p>
         <h1 className="mt-2 text-3xl font-semibold">Giỏ hàng</h1>
         <p className="mt-2 text-sm text-zinc-500">
-          Kiểm tra sản phẩm và thông tin nhận hàng trước khi xác nhận.
+          Kiểm tra sản phẩm và gửi yêu cầu trao đổi với cửa hàng.
         </p>
         <div className="mt-8">
           <Suspense

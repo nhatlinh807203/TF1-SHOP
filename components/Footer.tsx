@@ -75,7 +75,7 @@ const columns = [
     ],
   },
   {
-    title: "TF1SHOP",
+    title: "HOLOVAULT",
     links: [
       { name: "Về chúng tôi", href: "/about" },
       { name: "Liên hệ", href: "/contact" },
@@ -94,9 +94,9 @@ export default async function Footer() {
   await connection();
 
   return (
-    <footer className={`${manrope.className} relative bg-[#050607] text-zinc-400`}>
+    <footer className={`${manrope.className} relative bg-[#171717] text-zinc-400`}>
       {/* Đường vàng mảnh, cùng ngôn ngữ với header */}
-      <div className="h-px w-full bg-gradient-to-r from-transparent via-[#d4a537]/50 to-transparent" />
+      <div className="h-px w-full bg-gradient-to-r from-transparent via-cyan-100/35 to-transparent" />
 
       {/* Cam kết */}
       <div className="border-b border-white/[0.06]">
@@ -119,14 +119,14 @@ export default async function Footer() {
       <div className="mx-auto grid max-w-7xl gap-12 px-4 py-14 lg:grid-cols-[1.4fr_2fr] lg:gap-16 lg:px-6">
         {/* Thương hiệu + đăng ký */}
         <div className="max-w-md">
-          <Link href="/" className="group inline-flex items-center gap-3.5" aria-label="TF1SHOP - Trang chủ">
-            <div className="relative h-11 w-11 overflow-hidden rounded-xl ring-1 ring-[#d4a537]/50 ring-offset-2 ring-offset-[#050607] transition-all duration-300 group-hover:ring-[#62c7d9]/70 group-hover:shadow-[0_0_22px_rgba(98,199,217,0.35)]">
-              <Image src="/images/tf1logo.jpg" alt="" fill sizes="44px" className="object-cover" />
+          <Link href="/" className="group inline-flex items-center gap-3.5" aria-label="Holovault - Trang chủ">
+            <div className="relative h-11 w-11 overflow-hidden rounded-xl ring-1 ring-white/15 ring-offset-2 ring-offset-[#171717] transition-all duration-300 group-hover:ring-[#12c6df]/70 group-hover:shadow-[0_0_22px_rgba(18,198,223,0.35)]">
+              <Image src="/images/holovault.jpg" alt="" fill sizes="44px" className="object-cover" />
             </div>
             <span
-              className={`${cinzel.className} bg-gradient-to-b from-[#fcefbd] via-[#e2bb52] to-[#b3841f] bg-clip-text text-[1.6rem] font-bold leading-none tracking-[0.14em] text-transparent`}
+              className={`${cinzel.className} bg-gradient-to-r from-white via-cyan-100 to-[#64e6f4] bg-clip-text text-[1.6rem] font-bold leading-none tracking-[0.14em] text-transparent`}
             >
-              TF1SHOP
+              HOLOVAULT
             </span>
           </Link>
 
@@ -198,9 +198,24 @@ export default async function Footer() {
 
       {/* Thanh dưới cùng */}
       <div className="border-t border-white/[0.06]">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-4 py-6 text-xs text-zinc-600 sm:flex-row lg:px-6">
-          <p>© <CurrentYear /> TF1SHOP. Bảo lưu mọi quyền.</p>
-          <div className="flex items-center gap-6">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-3 px-4 py-6 text-xs text-zinc-600 sm:grid-cols-[1fr_auto_1fr] lg:px-6">
+          <p>© <CurrentYear /> Holovault. Bảo lưu mọi quyền.</p>
+          <p className="max-w-xl text-center text-[10px] leading-4 text-zinc-600">
+            Holovault was created under Riot Games&apos; &quot;Legal Jibber
+            Jabber&quot; policy using assets owned by Riot Games. Riot Games
+            does not endorse or sponsor this project.
+            {" "}Card catalog and market reference data:{" "}
+            <a
+              href="https://openrift.app/developers"
+              className="underline underline-offset-2 transition-colors hover:text-zinc-400"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              OpenRift
+            </a>
+            .
+          </p>
+          <div className="flex items-center gap-6 sm:justify-end">
             <Link href="/terms" className="transition-colors hover:text-[#f0d68f]">
               Điều khoản sử dụng
             </Link>

@@ -24,3 +24,70 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+.home-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: linear-gradient(90deg, transparent, black 68%);
+}
+
+:focus-visible {
+  outline: 2px solid #64e6f4;
+  outline-offset: 3px;
+}
+
+@keyframes hv-rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hv-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes hv-card-float {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -12px;
+  }
+}
+
+.hv-rise-in {
+  animation: hv-rise-in 700ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.hv-orbit {
+  animation: hv-orbit 48s linear infinite;
+}
+
+.hv-card-float {
+  animation: hv-card-float 5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

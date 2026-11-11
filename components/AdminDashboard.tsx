@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   ArrowDownRight,
   ArrowRight,
@@ -19,10 +20,7 @@ import {
   Settings2,
   ShieldCheck,
   ShoppingBag,
-  Sparkles,
-  Tags,
   Users,
-  Zap,
 } from "lucide-react";
 
 interface Customer {
@@ -52,9 +50,6 @@ interface AdminDashboardProps {
 
 const navigation = [
   { label: "Tổng quan", href: "/admin", icon: LayoutDashboard },
-  { label: "Năng lượng", href: "/admin/energies", icon: Zap },
-  { label: "Độ hiếm", href: "/admin/rarities", icon: Sparkles },
-  { label: "Role", href: "/admin/roles", icon: Tags },
   { label: "Sản phẩm", href: "/admin/products", icon: Package },
   { label: "Đơn hàng", href: "/admin/orders", icon: ShoppingBag },
   { label: "Khách hàng", href: "/admin#customers", icon: Users },
@@ -140,11 +135,11 @@ export default function AdminDashboard({
     <div className="min-h-screen bg-[#090b0c] text-white">
       <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 flex-col border-r border-white/[0.06] bg-[#0c0e0f] lg:flex">
         <Link href="/" className="flex h-[76px] items-center gap-3 border-b border-white/[0.06] px-6">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#f0d68f] to-[#bd8720] text-sm font-black text-[#1a1205]">
-            T
+          <span className="relative h-9 w-9 overflow-hidden rounded-xl">
+            <Image src="/images/holovault.jpg" alt="" fill sizes="36px" className="object-cover" />
           </span>
           <span className="text-sm font-bold tracking-[0.16em] text-[#f0d68f]">
-            TF1SHOP
+            HOLOVAULT
           </span>
         </Link>
 
@@ -188,7 +183,7 @@ export default function AdminDashboard({
         <header className="sticky top-0 z-20 flex h-[68px] items-center justify-between border-b border-white/[0.06] bg-[#090b0c]/90 px-4 backdrop-blur-xl sm:px-7">
           <div className="flex items-center gap-3">
             <Link href="/" className="text-sm font-bold tracking-[0.12em] text-[#f0d68f] lg:hidden">
-              TF1SHOP
+              HOLOVAULT
             </Link>
             <span className="hidden h-5 w-px bg-white/10 lg:block" />
             <p className="text-sm text-zinc-400">Khu vực quản trị</p>
@@ -242,7 +237,7 @@ export default function AdminDashboard({
                   Xin chào, {admin.name}
                 </h1>
                 <p className="mt-2 text-sm text-zinc-500">
-                  Theo dõi hoạt động quản lý TF1SHOP tại đây.
+                  Theo dõi hoạt động quản lý Holovault tại đây.
                 </p>
               </div>
               <div className="flex items-center gap-2 rounded-xl border border-white/[0.08] bg-[#101314] px-3.5 py-2.5 text-sm text-zinc-300">
@@ -480,7 +475,7 @@ export default function AdminDashboard({
           </section>
 
           <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-white/[0.06] pt-5 text-xs text-zinc-600">
-            <span>TF1SHOP Admin · Quản lý cửa hàng thẻ bài</span>
+            <span>Holovault Admin · Quản lý cửa hàng thẻ bài</span>
             <span>Truy cập dành riêng cho quản trị viên</span>
           </footer>
         </main>

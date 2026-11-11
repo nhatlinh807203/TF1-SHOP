@@ -67,7 +67,10 @@ export async function POST(request: Request) {
       );
     }
     const roles = await getRolesCollection();
-    if (!(await roles.countDocuments({ _id: new ObjectId(parsed.data.roleId) }))) {
+    if (
+      parsed.data.roleId &&
+      !(await roles.countDocuments({ _id: new ObjectId(parsed.data.roleId) }))
+    ) {
       return NextResponse.json(
         { message: "Role đã chọn không còn tồn tại." },
         { status: 400 },

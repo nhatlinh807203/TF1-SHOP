@@ -55,7 +55,7 @@ export async function sendPaymentReportedEmail(
       : [{ address: order.customer.email, isCustomer: true }]),
   ];
   const formattedTotal = new Intl.NumberFormat("vi-VN").format(order.total);
-  const paymentReference = `TF1SHOP ${orderId}`;
+  const paymentReference = `HOLOVAULT ${orderId}`;
   const textItems = order.items
     .map(
       (item) =>
@@ -92,13 +92,13 @@ export async function sendPaymentReportedEmail(
   const results = await Promise.allSettled(
     recipients.map(({ address, isCustomer }) => {
       const subject = isCustomer
-        ? `Đã nhận xác nhận thanh toán đơn TF1SHOP #${orderId}`
+        ? `Đã nhận xác nhận thanh toán đơn Holovault #${orderId}`
         : `CÓ ĐƠN ĐẶT HÀNG MỚI #${orderId} - Khách báo đã chuyển khoản`;
       const introduction = isCustomer
-        ? `TF1SHOP đã nhận thông báo bạn đã chuyển khoản cho đơn #${orderId}.`
+        ? `Holovault đã nhận thông báo bạn đã chuyển khoản cho đơn #${orderId}.`
         : `Có đơn đặt hàng mới #${orderId}. Khách hàng đã nhấn xác nhận đã chuyển khoản. Vui lòng kiểm tra giao dịch ngân hàng trước khi xác nhận đơn đã thanh toán.`;
       return transport.sendMail({
-        from: `"TF1SHOP" <${user}>`,
+        from: `"Holovault" <${user}>`,
         to: address,
         replyTo: order.customer.email,
         subject,
@@ -145,13 +145,13 @@ export async function sendPaymentConfirmedEmail(
     .join("");
 
   await transport.sendMail({
-    from: `"TF1SHOP" <${user}>`,
+    from: `"Holovault" <${user}>`,
     to: order.customer.email,
-    subject: `Thanh toán thành công - Đơn hàng TF1SHOP #${orderId}`,
+    subject: `Thanh toán thành công - Đơn hàng Holovault #${orderId}`,
     text: [
       `Xin chào ${order.customer.name},`,
       "",
-      `TF1SHOP xác nhận đã nhận được thanh toán cho đơn hàng #${orderId}.`,
+      `Holovault xác nhận đã nhận được thanh toán cho đơn hàng #${orderId}.`,
       "Đơn hàng của bạn đang chờ được xử lý và gửi đi. Chúng tôi sẽ cập nhật khi đơn hàng được bàn giao cho đơn vị vận chuyển.",
       "",
       itemsText,
@@ -159,18 +159,127 @@ export async function sendPaymentConfirmedEmail(
       `Tổng thanh toán: ${total} đ`,
       `Mã đơn hàng: ${orderId}`,
       "",
-      "Cảm ơn bạn đã mua sắm tại TF1SHOP.",
+      "Cảm ơn bạn đã mua sắm tại Holovault.",
     ].join("\n"),
     html: `<div style="font-family:Arial,sans-serif;color:#222;max-width:640px;margin:auto;line-height:1.6">
       <h1 style="color:#9a711b">Thanh toán thành công</h1>
       <p>Xin chào ${escapeHtml(order.customer.name)},</p>
-      <p>TF1SHOP xác nhận đã nhận được thanh toán cho đơn hàng <strong>#${escapeHtml(orderId)}</strong>.</p>
+      <p>Holovault xác nhận đã nhận được thanh toán cho đơn hàng <strong>#${escapeHtml(orderId)}</strong>.</p>
       <p>Đơn hàng của bạn đang chờ được xử lý và gửi đi. Chúng tôi sẽ cập nhật khi đơn hàng được bàn giao cho đơn vị vận chuyển.</p>
       <h2>Thông tin đơn hàng</h2>
       <ul>${itemsHtml}</ul>
       <p><strong>Tổng thanh toán:</strong> ${total} đ<br>
       <strong>Mã đơn hàng:</strong> ${escapeHtml(orderId)}</p>
-      <p>Cảm ơn bạn đã mua sắm tại TF1SHOP.</p>
+      <p>Cảm ơn bạn đã mua sắm tại Holovault.</p>
+    </div>`,
+  });
+}
+
+export interface QuoteExchangeRequest {
+  customer: {
+    name: string;
+    email: string;
+    contactMethod: "zalo" | "facebook" | "phone" | "email";
+    contactValue: string;
+    deliveryMethod: "ship" | "meet" | "undecided";
+    shippingAddress: string;
+    message: string;
+  };
+  items: Array<{
+    name: string;
+    quantity: number;
+    referencePrice: number;
+    tcgplayerPriceUsd: number | null;
+    priceSource: "TCGplayer" | null;
+  }>;
+}
+
+export async function sendQuoteExchangeRequestEmail(
+  request: QuoteExchangeRequest,
+) {
+  const { transport, user } = getGmailTransport();
+  const shopAddress =
+    process.env.ORDER_NOTIFICATION_EMAIL?.trim() ||
+    DEFAULT_ORDER_NOTIFICATION_EMAIL;
+  const formatPrice = (price: number) =>
+    `${new Intl.NumberFormat("vi-VN").format(price)} đ`;
+  const itemsText = request.items
+    .map(
+      (item) =>
+        `- ${item.name} × ${item.quantity} | Giá tham khảo${item.priceSource ? ` trên ${item.priceSource}: $${item.tcgplayerPriceUsd?.toFixed(2)} USD` : formatPrice(item.referencePrice)}`,
+    )
+    .join("\n");
+  const itemsHtml = request.items
+    .map(
+      (item) =>
+        `<li>${escapeHtml(item.name)} × ${item.quantity} | Giá tham khảo${item.priceSource ? ` trên ${item.priceSource}: $${item.tcgplayerPriceUsd?.toFixed(2)} USD` : formatPrice(item.referencePrice)}</li>`,
+    )
+    .join("");
+  const contactMethodLabels = {
+    zalo: "Zalo",
+    facebook: "Facebook",
+    phone: "Điện thoại",
+    email: "Email",
+  } as const;
+  const deliveryMethodLabels = {
+    ship: "Gửi hàng",
+    meet: "Giao dịch trực tiếp",
+    undecided: "Chưa quyết định",
+  } as const;
+  const referenceTotal = request.items.reduce(
+    (total, item) => total + item.referencePrice * item.quantity,
+    0,
+  );
+  const tcgplayerUsdTotal = request.items.reduce(
+    (total, item) =>
+      total + (item.tcgplayerPriceUsd ?? 0) * item.quantity,
+    0,
+  );
+  const messageText = request.customer.message || "Không có ghi chú";
+  const shippingAddressText =
+    request.customer.deliveryMethod === "ship"
+      ? request.customer.shippingAddress
+      : "Không áp dụng";
+
+  await transport.sendMail({
+    from: `"Holovault" <${user}>`,
+    to: shopAddress,
+    replyTo: request.customer.email,
+    subject: "YÊU CẦU TRAO ĐỔI GIÁ THẺ BÀI MỚI",
+    text: [
+      "Có khách hàng gửi yêu cầu trao đổi về thẻ bài.",
+      "",
+      itemsText,
+      "",
+      ...(tcgplayerUsdTotal > 0
+        ? [`Tổng giá tham khảo TCGplayer: $${tcgplayerUsdTotal.toFixed(2)} USD`]
+        : []),
+      `Giá trị quy đổi dùng để kiểm tra ngưỡng gửi yêu cầu: ${formatPrice(referenceTotal)}`,
+      "Giá chỉ mang tính tham khảo, không xác nhận giao dịch.",
+      `Ghi chú: ${messageText}`,
+      "",
+      `Họ tên: ${request.customer.name}`,
+      `Email tài khoản: ${request.customer.email}`,
+      `Phương thức liên hệ: ${contactMethodLabels[request.customer.contactMethod]}`,
+      `Thông tin liên hệ: ${request.customer.contactValue}`,
+      `Cách nhận card: ${deliveryMethodLabels[request.customer.deliveryMethod]}`,
+      `Địa chỉ nhận hàng: ${shippingAddressText}`,
+    ].join("\n"),
+    html: `<div style="font-family:Arial,sans-serif;color:#222;max-width:720px;margin:auto">
+      <h1 style="color:#9a711b">Yêu cầu trao đổi giá thẻ bài</h1>
+      <h2>Sản phẩm</h2>
+      <ul>${itemsHtml}</ul>
+      <p>${tcgplayerUsdTotal > 0 ? `<strong>Tổng giá tham khảo TCGplayer:</strong> $${tcgplayerUsdTotal.toFixed(2)} USD<br>` : ""}
+      <strong>Giá trị quy đổi dùng để kiểm tra ngưỡng gửi yêu cầu:</strong> ${formatPrice(referenceTotal)}<br>
+      Giá chỉ mang tính tham khảo, không xác nhận giao dịch.<br>
+      <strong>Ghi chú:</strong> ${escapeHtml(messageText)}</p>
+      <h2>Thông tin khách hàng</h2>
+      <p><strong>Họ tên:</strong> ${escapeHtml(request.customer.name)}<br>
+      <strong>Email tài khoản:</strong> ${escapeHtml(request.customer.email)}<br>
+      <strong>Phương thức liên hệ:</strong> ${contactMethodLabels[request.customer.contactMethod]}<br>
+      <strong>Thông tin liên hệ:</strong> ${escapeHtml(request.customer.contactValue)}<br>
+      <strong>Cách nhận card:</strong> ${deliveryMethodLabels[request.customer.deliveryMethod]}<br>
+      <strong>Địa chỉ nhận hàng:</strong> ${escapeHtml(shippingAddressText)}</p>
     </div>`,
   });
 }

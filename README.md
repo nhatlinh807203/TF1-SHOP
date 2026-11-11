@@ -1,4 +1,4 @@
-# TF1SHOP
+# Holovault
 
 ## Cấu hình đăng ký và đăng nhập
 
@@ -31,7 +31,15 @@ Chỉ khi khách nhấn **Tôi đã chuyển khoản - xác nhận thanh toán**
 
 ## Quản lý sản phẩm
 
-Đăng nhập bằng tài khoản admin. Các trang quản trị được chia riêng: `/admin/energies` để thêm/sửa/xóa năng lượng (tên và ảnh), `/admin/rarities` để quản lý các mức độ hiếm, `/admin/roles` để quản lý role (tên và ảnh), và `/admin/products` để quản lý sản phẩm. Khi tạo sản phẩm, chọn tối thiểu một và tối đa hai năng lượng đã tạo, đồng thời chọn một role; riêng thẻ bài cần chọn thêm một độ hiếm. Có thể nhập hashtag (phân tách bằng dấu phẩy), giá, tồn kho, mô tả và chọn ảnh sản phẩm từ thiết bị (JPG, PNG, WebP hoặc GIF, tối đa 5 MB). Ảnh sản phẩm là bắt buộc nếu bật hiển thị nổi bật. Năng lượng, role và độ hiếm không thể xóa khi đang được dùng bởi sản phẩm. Dữ liệu được lưu trong MongoDB. Bật **Hiển thị nổi bật trên banner trang chủ** và **Đang kinh doanh** để sản phẩm xuất hiện trong banner; tối đa bảy sản phẩm mới cập nhật có ảnh được hiển thị.
+Đăng nhập bằng tài khoản admin và mở `/admin/products` để quản lý sản phẩm. Form quản trị không còn hiển thị các trường năng lượng, độ hiếm hoặc role; dữ liệu phân loại cũ trong MongoDB được giữ nguyên. Với sản phẩm thẻ bài, chọn game/TCG: Riftbound, Pokémon, Digimon hoặc One Piece. Trang chủ chỉ hiển thị ảnh, tên và giá tham khảo của thẻ; không hiển thị nội dung luật/mô tả, set hoặc số thẻ. Khách có thể thêm thẻ vào giỏ, sau đó gửi yêu cầu trao đổi từ giỏ với tên, phương thức và thông tin liên hệ, cách nhận card, địa chỉ nếu chọn gửi hàng, và ghi chú (nếu có). Yêu cầu có mức tổng giá tham khảo tối thiểu 50.000 đ; máy chủ tự tính ngưỡng này từ giá sản phẩm hiện tại trong MongoDB. Giá chỉ mang tính tham khảo; yêu cầu không tạo đơn hàng hoặc thanh toán tự động. Email cửa hàng dùng `ORDER_NOTIFICATION_EMAIL` (mặc định hộp thư cửa hàng); cần cấu hình `EMAIL_USER` và `EMAIL_PASS` để gửi email. Trang chủ tự tạo một khu vực riêng cho từng game khi có sản phẩm thuộc game đó đang bán và còn hàng; nhóm game chưa có sản phẩm không hiển thị. Thẻ cũ chưa phân loại vẫn nằm trong khu vực Sản phẩm khác. Có thể nhập hashtag (phân tách bằng dấu phẩy), giá, tồn kho, mô tả và chọn ảnh sản phẩm từ thiết bị (JPG, PNG, WebP hoặc GIF, tối đa 5 MB). Ảnh sản phẩm là bắt buộc nếu bật hiển thị nổi bật. Dữ liệu được lưu trong MongoDB.
+
+### Đồng bộ catalog Riftbound
+
+Trang `/admin/products` có mục **Catalog Riftbound Singles**. Catalog và giá thị trường TCGplayer được lấy từ API miễn phí của [OpenRift](https://openrift.app/developers), không cần API key. Ứng dụng lọc bản in tiếng Anh thường (không foil, alt art, signed hoặc overnumbered), một phiên bản cho mỗi thẻ trong 5 set chính: Origins (Set 1), Spiritforged (Set 2), Unleashed (Set 3), Vendetta (Set 4) và Radiance (Set 5). Catalog lớn được bỏ qua Next.js Data Cache (giới hạn mỗi mục cache 2 MB) và lưu trong bộ nhớ ứng dụng 1 giờ; giá OpenRift được cache 1 giờ. Các request OpenRift gửi User-Agent nhận diện Holovault.
+
+Admin chỉ cần nhập tồn kho; giá tham khảo trên storefront hiển thị theo giá market thực tế trên TCGplayer bằng USD. Giá quy đổi VNĐ nội bộ dùng cho kiểm tra ngưỡng gửi yêu cầu được tính bằng giá USD × 23.000 VNĐ/USD (làm tròn đến đồng); có thể đặt `TCGPLAYER_USD_VND_RATE` để ghi đè tỷ giá. Giá USD và giá quy đổi được tính trực tiếp từ giá USD đã lưu, không cần nhập lại sản phẩm. Nếu thiếu giá thị trường cho thẻ mới, ứng dụng báo lỗi thay vì tạo sản phẩm thiếu giá; sản phẩm đã nhập trước đó vẫn có thể cập nhật tồn kho. ID printing được dùng để tránh tạo trùng; chỉ sản phẩm card đang kinh doanh có tồn kho lớn hơn 0 mới hiện trên trang chủ.
+
+Ảnh được tải tự động từ [PokéWallet Riftbound API](https://pokewallet.io/api-docs/riftbound); catalog đối chiếu thẻ theo set, số thẻ và tên, còn ảnh được proxy phía server và cache 24 giờ. Tạo API key trong [dashboard PokéWallet](https://pokewallet.io/dashboard) và đặt `POKEWALLET_API_KEY` trong `.env.local` hoặc biến môi trường hosting; không đưa key vào client hoặc commit. API miễn phí hiện giới hạn 100 yêu cầu mỗi giờ và 1.000 mỗi ngày. Khi chưa cấu hình key, catalog vẫn hiển thị nhưng ảnh PokéWallet chưa tải được. Quản trị viên vẫn có thể tải ảnh mình có quyền sử dụng để thay ảnh API trên sản phẩm.
 
 ## Getting Started
 

@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TF1SHOP",
+  title: "Holovault",
   description: "Cửa hàng sưu tầm và giao dịch thẻ bài.",
 };
 
@@ -37,14 +37,14 @@ export default function RootLayout({
         <CartProvider>
           <Suspense
             fallback={
-              <header className="sticky top-0 z-50 border-b border-white/[0.06] bg-[#07090a] text-white">
+              <header className="sticky top-0 z-50 border-b border-white/[0.06] bg-[#1b1b1b] text-white">
                 <div className="mx-auto flex h-[72px] max-w-7xl items-center px-4 lg:px-6">
                   <Link
                     href="/"
-                    aria-label="TF1SHOP - Trang chủ"
-                    className="font-serif text-2xl font-bold tracking-[0.14em] text-[#e2bb52]"
+                    aria-label="Holovault - Trang chủ"
+                    className="font-serif text-2xl font-bold tracking-[0.14em] text-cyan-100"
                   >
-                    TF1SHOP
+                    HOLOVAULT
                   </Link>
                 </div>
               </header>
