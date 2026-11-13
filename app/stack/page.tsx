@@ -8,7 +8,7 @@ export default function StackPage() {
   return (
     <section className="min-h-[60vh] bg-[#090b0c] px-4 py-12 text-white sm:px-6 sm:py-16">
       <div className="mx-auto max-w-6xl">
-        <p className="text-xs font-semibold tracking-[0.2em] text-[#d9b754]">
+        <p className="text-xs font-semibold tracking-[0.2em] text-cyan-200">
           HOLOVAULT
         </p>
         <h1 className="mt-2 text-3xl font-semibold">Giỏ hàng</h1>
@@ -53,7 +53,7 @@ async function CheckoutContent() {
         </p>
         <Link
           href="/login"
-          className="mt-5 inline-flex rounded-lg bg-gradient-to-b from-[#f0d783] to-[#c79732] px-5 py-2.5 text-sm font-semibold text-[#211805]"
+          className="mt-5 inline-flex rounded-lg bg-gradient-to-r from-[#12c6df] to-[#64e6f4] px-5 py-2.5 text-sm font-semibold text-[#07191c] shadow-[0_8px_24px_-12px_rgba(18,198,223,0.65)] transition duration-300 hover:-translate-y-0.5 hover:brightness-110"
         >
           Đăng nhập
         </Link>

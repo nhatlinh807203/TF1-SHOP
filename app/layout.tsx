@@ -37,7 +37,7 @@ export default function RootLayout({
         <CartProvider>
           <Suspense
             fallback={
-              <header className="sticky top-0 z-50 border-b border-white/[0.06] bg-[#1b1b1b] text-white">
+              <header className="sticky top-0 z-50 border-b border-white/[0.06] bg-[#0b0f12] text-white">
                 <div className="mx-auto flex h-[72px] max-w-7xl items-center px-4 lg:px-6">
                   <Link
                     href="/"
@@ -52,7 +52,7 @@ export default function RootLayout({
           >
             <HeaderWithSession />
           </Suspense>
-          <main className="flex-1">{children}</main>
+          <main className="hv-page-enter flex-1">{children}</main>
           <Suspense fallback={null}>
             <Footer />
           </Suspense>

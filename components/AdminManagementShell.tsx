@@ -55,7 +55,7 @@ export default function AdminManagementShell({
           <span className="relative h-9 w-9 overflow-hidden rounded-xl">
             <Image src="/images/holovault.jpg" alt="" fill sizes="36px" className="object-cover" />
           </span>
-          <span className="text-sm font-bold tracking-[0.16em] text-[#f0d68f]">
+          <span className="text-sm font-bold tracking-[0.16em] text-cyan-100">
             HOLOVAULT
           </span>
         </Link>
@@ -74,7 +74,7 @@ export default function AdminManagementShell({
                   href={href}
                   className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition ${
                     active
-                      ? "bg-[#d4a537]/10 font-medium text-[#efd486] ring-1 ring-inset ring-[#d4a537]/15"
+                      ? "bg-cyan-100/[0.08] font-medium text-cyan-100 ring-1 ring-inset ring-cyan-100/20"
                       : "text-zinc-400 hover:bg-white/[0.04] hover:text-white"
                   }`}
                 >
@@ -88,7 +88,7 @@ export default function AdminManagementShell({
 
         <div className="mt-auto border-t border-white/[0.06] p-4">
           <div className="flex items-center gap-3 rounded-xl bg-white/[0.03] p-3">
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#d4a537]/15 text-xs font-semibold text-[#efd486]">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-cyan-100/10 text-xs font-semibold text-cyan-100">
               {getInitials(admin.name)}
             </span>
             <div className="min-w-0 flex-1">
@@ -107,7 +107,7 @@ export default function AdminManagementShell({
           <div className="flex items-center gap-3">
             <Link
               href="/"
-              className="text-sm font-bold tracking-[0.12em] text-[#f0d68f] lg:hidden"
+              className="text-sm font-bold tracking-[0.12em] text-cyan-100 lg:hidden"
             >
               HOLOVAULT
             </Link>
@@ -124,7 +124,7 @@ export default function AdminManagementShell({
               className="relative flex h-9 w-9 items-center justify-center rounded-full text-zinc-400 transition hover:bg-white/[0.06] hover:text-white"
             >
               <Bell className="h-[18px] w-[18px]" />
-              <span className="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-[#e3bc5e]" />
+              <span className="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-cyan-200" />
             </button>
             <Link
               href="/"
@@ -148,7 +148,7 @@ export default function AdminManagementShell({
                 href={href}
                 className={`flex shrink-0 items-center gap-2 rounded-lg px-3 py-2 text-xs ${
                   active
-                    ? "bg-[#d4a537]/10 text-[#efd486]"
+                    ? "bg-cyan-100/[0.08] text-cyan-100"
                     : "text-zinc-400"
                 }`}
               >

@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 import type { OrderDocument } from "@/lib/db";
 
-const DEFAULT_ORDER_NOTIFICATION_EMAIL = "letiennhatlinh08072003@gmail.com";
+const DEFAULT_ORDER_NOTIFICATION_EMAIL = "holovault.hcmc@gmail.com";
 
 function getGmailTransport() {
   const user =

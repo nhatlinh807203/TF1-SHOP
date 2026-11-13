@@ -94,16 +94,16 @@ export default async function Footer() {
   await connection();
 
   return (
-    <footer className={`${manrope.className} relative bg-[#171717] text-zinc-400`}>
+    <footer className={`${manrope.className} relative bg-[#0b0f12] text-zinc-400`}>
       {/* Đường vàng mảnh, cùng ngôn ngữ với header */}
-      <div className="h-px w-full bg-gradient-to-r from-transparent via-cyan-100/35 to-transparent" />
+      <div className="h-px w-full bg-gradient-to-r from-transparent via-cyan-100/45 to-transparent" />
 
       {/* Cam kết */}
       <div className="border-b border-white/[0.06]">
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 py-8 sm:grid-cols-2 lg:grid-cols-4 lg:px-6">
           {trust.map(({ icon: Icon, title, text }) => (
             <div key={title} className="flex items-center gap-4">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#d4a537]/30 bg-[#d4a537]/[0.07] text-[#e2bb52]">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-cyan-100/20 bg-cyan-100/[0.05] text-cyan-100">
                 <Icon className="h-5 w-5" strokeWidth={1.6} />
               </span>
               <div>
@@ -120,7 +120,7 @@ export default async function Footer() {
         {/* Thương hiệu + đăng ký */}
         <div className="max-w-md">
           <Link href="/" className="group inline-flex items-center gap-3.5" aria-label="Holovault - Trang chủ">
-            <div className="relative h-11 w-11 overflow-hidden rounded-xl ring-1 ring-white/15 ring-offset-2 ring-offset-[#171717] transition-all duration-300 group-hover:ring-[#12c6df]/70 group-hover:shadow-[0_0_22px_rgba(18,198,223,0.35)]">
+            <div className="relative h-11 w-11 overflow-hidden rounded-xl ring-1 ring-white/15 ring-offset-2 ring-offset-[#0b0f12] transition-all duration-300 group-hover:ring-[#12c6df]/70 group-hover:shadow-[0_0_22px_rgba(18,198,223,0.35)]">
               <Image src="/images/holovault.jpg" alt="" fill sizes="44px" className="object-cover" />
             </div>
             <span
@@ -151,7 +151,7 @@ export default async function Footer() {
               />
               <button
                 type="submit"
-                className="absolute right-1 top-1 h-9 rounded-full bg-gradient-to-b from-[#ecd07a] to-[#c9972a] px-5 text-sm font-semibold text-[#1a1205] shadow-[0_0_0_1px_rgba(255,236,170,0.35)_inset] transition hover:brightness-110 active:scale-[0.98]"
+                className="absolute right-1 top-1 h-9 rounded-full bg-gradient-to-r from-[#12c6df] to-[#64e6f4] px-5 text-sm font-semibold text-[#07191c] shadow-[0_4px_14px_-5px_rgba(18,198,223,0.55)] transition duration-300 hover:-translate-y-0.5 hover:brightness-110 active:scale-[0.98]"
               >
                 Đăng ký
               </button>
@@ -166,7 +166,7 @@ export default async function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={name}
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/[0.08] text-zinc-400 transition-colors hover:border-[#d4a537]/50 hover:bg-[#d4a537]/10 hover:text-[#f0d68f]"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/[0.08] text-zinc-400 transition-all duration-300 hover:-translate-y-0.5 hover:border-cyan-100/30 hover:bg-cyan-100/[0.06] hover:text-cyan-100"
               >
                 <Icon className="h-[18px] w-[18px]" strokeWidth={1.75} />
               </a>
@@ -184,7 +184,7 @@ export default async function Footer() {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="text-sm text-zinc-500 transition-colors hover:text-[#f0d68f]"
+                      className="text-sm text-zinc-500 transition-colors hover:text-cyan-100"
                     >
                       {link.name}
                     </Link>
@@ -216,10 +216,10 @@ export default async function Footer() {
             .
           </p>
           <div className="flex items-center gap-6 sm:justify-end">
-            <Link href="/terms" className="transition-colors hover:text-[#f0d68f]">
+            <Link href="/terms" className="transition-colors hover:text-cyan-100">
               Điều khoản sử dụng
             </Link>
-            <Link href="/privacy" className="transition-colors hover:text-[#f0d68f]">
+            <Link href="/privacy" className="transition-colors hover:text-cyan-100">
               Chính sách bảo mật
             </Link>
           </div>

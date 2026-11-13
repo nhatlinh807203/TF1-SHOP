@@ -94,7 +94,7 @@ export default function LoginPage() {
           <div className="mx-auto flex w-full items-center gap-1 rounded-full border border-white/[0.07] bg-white/[0.03] p-1">
             <span
               aria-current="page"
-              className="flex-1 rounded-full bg-gradient-to-b from-[#d4a537]/25 to-[#d4a537]/10 py-2 text-center text-sm font-medium text-[#f0d68f] ring-1 ring-inset ring-[#d4a537]/40"
+              className="flex-1 rounded-full bg-cyan-100/[0.08] py-2 text-center text-sm font-medium text-cyan-100 ring-1 ring-inset ring-cyan-100/20"
             >
               Đăng nhập
             </span>
@@ -164,11 +164,11 @@ export default function LoginPage() {
                   type="checkbox"
                   checked={remember}
                   onChange={(e) => setRemember(e.target.checked)}
-                  className="h-4 w-4 rounded border-white/20 bg-white/5 accent-[#d4a537]"
+                  className="h-4 w-4 rounded border-white/20 bg-white/5 accent-cyan-300"
                 />
                 Ghi nhớ tôi
               </label>
-              <Link href="/forgot-password" className="text-[#e2bb52] transition-colors hover:text-[#f6dd8a]">
+              <Link href="/forgot-password" className="text-cyan-200 transition-colors hover:text-cyan-100">
                 Quên mật khẩu?
               </Link>
             </div>
@@ -177,7 +177,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="flex h-11 w-full items-center justify-center gap-2 rounded-full bg-gradient-to-b from-[#ecd07a] to-[#c9972a] text-sm font-semibold text-[#1a1205] shadow-[0_0_0_1px_rgba(255,236,170,0.35)_inset,0_6px_18px_-6px_rgba(212,165,55,0.6)] transition hover:brightness-110 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70"
+              className="flex h-11 w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#12c6df] to-[#64e6f4] text-sm font-semibold text-[#07191c] shadow-[0_6px_20px_-8px_rgba(18,198,223,0.5)] transition duration-300 hover:-translate-y-0.5 hover:brightness-110 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70"
             >
               {loading ? (
                 <>
@@ -207,11 +207,11 @@ export default function LoginPage() {
 
         <p className="mt-7 text-center text-xs text-zinc-600">
           Bằng việc đăng nhập, bạn đồng ý với{" "}
-          <Link href="/terms" className="text-zinc-400 transition-colors hover:text-[#f0d68f]">
+          <Link href="/terms" className="text-zinc-400 transition-colors hover:text-cyan-100">
             Điều khoản sử dụng
           </Link>{" "}
           và{" "}
-          <Link href="/privacy" className="text-zinc-400 transition-colors hover:text-[#f0d68f]">
+          <Link href="/privacy" className="text-zinc-400 transition-colors hover:text-cyan-100">
             Chính sách bảo mật
           </Link>
           .

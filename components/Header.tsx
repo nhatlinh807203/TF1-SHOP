@@ -122,7 +122,7 @@ export default function Header({ initialUser }: HeaderProps) {
       {/* Thanh thông báo: tự thu lại khi cuộn */}
       {ANNOUNCEMENT && (
         <div
-          className={`overflow-hidden bg-[#202020] text-center text-[10px] tracking-wide text-cyan-100 transition-[height] duration-300 motion-reduce:transition-none sm:text-xs ${
+          className={`overflow-hidden bg-[#10171a] text-center text-[10px] tracking-wide text-cyan-100 transition-[height] duration-300 motion-reduce:transition-none sm:text-xs ${
             scrolled ? "h-0" : "h-8"
           }`}
         >
@@ -134,8 +134,8 @@ export default function Header({ initialUser }: HeaderProps) {
       <div
         className={`relative border-b border-white/[0.06] transition-colors duration-300 motion-reduce:transition-none ${
           scrolled
-            ? "bg-[#1b1b1b]/90 shadow-[0_12px_32px_-12px_rgba(0,0,0,0.8)] backdrop-blur-xl"
-            : "bg-[#1b1b1b]"
+            ? "bg-[#0b0f12]/90 shadow-[0_12px_32px_-12px_rgba(0,0,0,0.8)] backdrop-blur-xl"
+            : "bg-[#0b0f12]"
         }`}
       >
         <div
@@ -146,7 +146,7 @@ export default function Header({ initialUser }: HeaderProps) {
           {/* Logo + wordmark */}
           <Link href="/" className="group flex shrink-0 items-center gap-2 sm:gap-3.5" aria-label="Holovault - Trang chủ">
             <div
-              className={`relative overflow-hidden rounded-xl ring-1 ring-white/15 ring-offset-2 ring-offset-[#1b1b1b] transition-all duration-300 group-hover:ring-[#12c6df]/70 group-hover:shadow-[0_0_22px_rgba(18,198,223,0.35)] ${
+              className={`relative overflow-hidden rounded-xl ring-1 ring-white/15 ring-offset-2 ring-offset-[#0b0f12] transition-all duration-300 group-hover:ring-[#12c6df]/70 group-hover:shadow-[0_0_22px_rgba(18,198,223,0.35)] ${
                 scrolled ? "h-9 w-9 sm:h-10 sm:w-10" : "h-10 w-10 sm:h-11 sm:w-11"
               }`}
             >
@@ -254,11 +254,11 @@ export default function Header({ initialUser }: HeaderProps) {
             <Link
               href="/stack"
               aria-label={`Giỏ hàng, ${itemCount} sản phẩm`}
-              className="group/stack flex h-9 items-center gap-1 rounded-full bg-gradient-to-r from-[#12c6df] to-[#64e6f4] px-1.5 text-sm font-bold text-[#07191c] shadow-[0_6px_22px_-8px_rgba(18,198,223,0.65)] transition hover:brightness-110 active:scale-[0.98] sm:ml-1 sm:h-10 sm:gap-2 sm:pl-4 sm:pr-1.5"
+              className="group/stack flex h-9 items-center gap-1 rounded-full bg-gradient-to-r from-[#12c6df] to-[#64e6f4] px-1.5 text-sm font-bold text-[#07191c] shadow-[0_6px_22px_-8px_rgba(18,198,223,0.45)] transition duration-300 hover:-translate-y-0.5 hover:brightness-110 active:scale-[0.98] sm:ml-1 sm:h-10 sm:gap-2 sm:pl-4 sm:pr-1.5"
             >
               <Layers className="h-4 w-4" strokeWidth={2} />
               <span className="hidden sm:inline">Giỏ hàng</span>
-              <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-[#1b1b1b]/90 px-1.5 text-xs font-bold tabular-nums text-white sm:h-7 sm:min-w-7 sm:px-2">
+              <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-[#0b0f12]/90 px-1.5 text-xs font-bold tabular-nums text-white sm:h-7 sm:min-w-7 sm:px-2">
                 {itemCount}
               </span>
             </Link>
@@ -285,7 +285,7 @@ export default function Header({ initialUser }: HeaderProps) {
 
       {/* Menu mobile */}
       <div
-        className={`grid bg-[#1b1b1b]/95 backdrop-blur-xl transition-[grid-template-rows] duration-300 motion-reduce:transition-none xl:hidden ${
+        className={`grid bg-[#0b0f12]/95 backdrop-blur-xl transition-[grid-template-rows] duration-300 motion-reduce:transition-none xl:hidden ${
           open ? "grid-rows-[1fr] border-b border-white/[0.06]" : "grid-rows-[0fr]"
         }`}
       >
@@ -327,7 +327,7 @@ export default function Header({ initialUser }: HeaderProps) {
               {sessionUser?.role === "admin" && (
                 <Link
                   href="/admin"
-                  className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-white/[0.08] py-3 text-sm text-[#f0d68f]"
+                  className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-white/[0.08] py-3 text-sm text-cyan-100"
                 >
                   <Shield className="h-4 w-4" /> Admin
                 </Link>

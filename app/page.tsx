@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
 import { connection } from "next/server";
@@ -28,7 +29,7 @@ const collections = [
     description: "Tìm lá bài bạn đang thiếu, chọn đúng phiên bản và tình trạng.",
     label: "SINGLE CARDS",
     icon: Gem,
-    style: "from-[#17272a] via-[#202526] to-[#1b1b1b]",
+    style: "from-[#193238] via-[#152327] to-[#101619]",
     glow: "bg-cyan-300/20",
   },
   {
@@ -39,8 +40,8 @@ const collections = [
     description: "Khám phá những lá bài hiếm dành cho góc trưng bày của bạn.",
     label: "COLLECTOR",
     icon: Sparkles,
-    style: "from-[#30231d] via-[#24201e] to-[#1b1b1b]",
-    glow: "bg-orange-400/20",
+    style: "from-[#302b1d] via-[#24231e] to-[#121715]",
+    glow: "bg-[#e2bb52]/20",
   },
   {
     id: "bo-bai",
@@ -50,7 +51,7 @@ const collections = [
     description: "Chuẩn bị bộ bài của bạn và sẵn sàng cho ván đấu tiếp theo.",
     label: "READY TO PLAY",
     icon: Boxes,
-    style: "from-[#20272a] via-[#202020] to-[#1b1b1b]",
+    style: "from-[#202d31] via-[#192226] to-[#101619]",
     glow: "bg-cyan-300/15",
   },
 ];
@@ -66,7 +67,7 @@ const assurances = [
     icon: PackageCheck,
     title: "Đóng gói an toàn",
     text: "Nâng niu từng lá bài",
-    accent: "text-orange-300",
+    accent: "text-[#e2bb52]",
   },
   {
     icon: Truck,
@@ -78,7 +79,7 @@ const assurances = [
     icon: BadgeCheck,
     title: "Hỗ trợ tận tâm",
     text: "Luôn sẵn sàng giải đáp",
-    accent: "text-orange-300",
+    accent: "text-[#e2bb52]",
   },
 ];
 
@@ -125,6 +126,16 @@ async function FeaturedArtwork() {
         <div className="absolute inset-20 rounded-full border border-orange-200/[0.08]" />
         <div className="absolute inset-32 rounded-full bg-cyan-400/[0.08] blur-3xl" />
       </div>
+      <div className="pointer-events-none absolute right-[5%] top-1/2 z-[2] hidden h-[min(36rem,92%)] w-[min(29rem,45vw)] -translate-y-1/2 sm:block lg:w-[min(40rem,48vw)]">
+        <Image
+          src="/images/yasuo-final.png"
+          alt=""
+          width={735}
+          height={509}
+          sizes="(max-width: 640px) 0px, (max-width: 1024px) 45vw, 29rem"
+          className="hv-yasuo-art h-full w-full object-contain"
+        />
+      </div>
       {products.map((product, index) => {
         const productId = product._id.toString();
         const imageUrl = product.imageContentType
@@ -149,7 +160,7 @@ async function FeaturedArtwork() {
           />
         );
       })}
-      <div className="absolute right-[8%] top-[20%] h-2 w-2 rounded-full bg-[#ff7a45] shadow-[0_0_20px_5px_rgba(255,122,69,0.5)]" />
+      <div className="absolute right-[8%] top-[20%] h-2 w-2 rounded-full bg-[#e2bb52] shadow-[0_0_20px_5px_rgba(226,187,82,0.4)]" />
       <div className="absolute right-[37%] top-[67%] h-1.5 w-1.5 rounded-full bg-cyan-200/80 shadow-[0_0_18px_4px_rgba(165,236,231,0.35)]" />
     </div>
   );
@@ -310,7 +321,7 @@ async function HomeProductCatalog() {
         return (
           <article
             key={productId}
-            className="flex h-full min-w-0 flex-col overflow-hidden rounded-xl border border-white/[0.08] bg-[#242424] shadow-[0_14px_50px_-30px_rgba(0,0,0,0.8)] transition hover:-translate-y-1 hover:border-cyan-100/25 hover:shadow-[0_20px_60px_-32px_rgba(18,198,223,0.2)] sm:rounded-2xl"
+            className="hv-interactive-card flex h-full min-w-0 flex-col overflow-hidden rounded-xl border border-white/[0.08] bg-[#151d21] shadow-[0_14px_50px_-30px_rgba(0,0,0,0.8)] sm:rounded-2xl"
           >
             <Link
               href={`/products/${productId}`}
@@ -383,9 +394,9 @@ async function HomeProductCatalog() {
 
 export default function Home() {
   return (
-    <div className="overflow-hidden bg-[#1b1b1b] text-white">
+    <div className="overflow-hidden bg-[#0b0f12] text-white">
       <section className="relative isolate min-h-[620px] border-b border-white/[0.08] sm:min-h-[680px] lg:min-h-[740px]">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_78%_48%,rgba(18,198,223,0.13),transparent_31%),radial-gradient(ellipse_at_89%_72%,rgba(255,122,69,0.1),transparent_25%),linear-gradient(115deg,#1b1b1b_0%,#1d2020_52%,#202020_100%)]" />
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_78%_48%,rgba(18,198,223,0.16),transparent_31%),radial-gradient(ellipse_at_89%_72%,rgba(226,187,82,0.08),transparent_25%),linear-gradient(115deg,#0b0f12_0%,#10171a_52%,#111619_100%)]" />
         <div className="home-grid absolute inset-0 -z-10 opacity-20" />
         <Suspense fallback={null}>
           <FeaturedArtwork />
@@ -400,7 +411,7 @@ export default function Home() {
               Tìm lá bài.
               <br />
               Xây chiến thuật.
-              <span className="mt-1 block bg-gradient-to-r from-[#64e6f4] via-[#36cde0] to-[#ff9567] bg-clip-text text-transparent">
+              <span className="mt-1 block bg-gradient-to-r from-[#64e6f4] via-[#36cde0] to-[#e2bb52] bg-clip-text text-transparent">
                 Sưu tầm đam mê.
               </span>
             </h1>
@@ -416,7 +427,7 @@ export default function Home() {
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan-200/30 to-transparent" />
       </section>
 
-      <section aria-label="Cam kết của Holovault" className="border-b border-white/[0.07] bg-[#202020]">
+      <section aria-label="Cam kết của Holovault" className="border-b border-white/[0.07] bg-[#10171a]">
         <div className="mx-auto grid max-w-7xl grid-cols-2 gap-px px-5 py-5 sm:px-8 lg:grid-cols-4 lg:px-10">
           {assurances.map(({ icon: Icon, title, text, accent }) => (
             <div key={title} className="group flex items-center gap-3 px-2 py-3 sm:px-5">
@@ -458,14 +469,14 @@ export default function Home() {
               <Link
                 key={id}
                 href={href}
-                className={`group relative isolate min-h-[170px] scroll-mt-28 overflow-hidden rounded-xl border border-white/[0.09] bg-gradient-to-br ${style} p-3 shadow-[0_16px_50px_-28px_rgba(0,0,0,0.85)] transition duration-300 hover:-translate-y-1 hover:border-cyan-100/25 hover:shadow-[0_24px_70px_-30px_rgba(18,198,223,0.16)] sm:min-h-[300px] sm:rounded-2xl sm:p-7`}
+                className={`hv-interactive-card group relative isolate min-h-[170px] scroll-mt-28 overflow-hidden rounded-xl border border-white/[0.09] bg-gradient-to-br ${style} p-3 shadow-[0_16px_50px_-28px_rgba(0,0,0,0.85)] sm:min-h-[300px] sm:rounded-2xl sm:p-7`}
               >
                 <div className={`absolute -right-12 -top-12 -z-10 h-44 w-44 rounded-full ${glow} blur-3xl transition duration-500 group-hover:scale-150`} />
                 <div className="flex items-start justify-between">
                           <span className="whitespace-nowrap text-[8px] tracking-[0.04em] text-white/50 sm:text-[10px] sm:tracking-[0.2em]">{label}</span>
                   <span className="font-serif text-[10px] text-white/30 sm:text-sm">{number}</span>
                 </div>
-                <span className={`mt-5 flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-black/20 sm:mt-9 sm:h-12 sm:w-12 sm:rounded-xl ${id === "bo-suu-tap" ? "text-orange-300" : "text-cyan-200"}`}>
+                <span className={`mt-5 flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-black/20 sm:mt-9 sm:h-12 sm:w-12 sm:rounded-xl ${id === "bo-suu-tap" ? "text-[#e2bb52]" : "text-cyan-200"}`}>
                   <Icon className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={1.5} />
                 </span>
                 <div className="mt-4 flex items-end justify-between gap-1 sm:mt-6 sm:gap-4">
@@ -485,7 +496,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="danh-muc" className="scroll-mt-20 border-y border-white/[0.07] bg-[#202020] px-5 py-16 sm:px-8 sm:py-20 lg:px-10">
+      <section id="danh-muc" className="scroll-mt-20 border-y border-white/[0.07] bg-[#10171a] px-5 py-16 sm:px-8 sm:py-20 lg:px-10">
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
           <div>
             <p className="text-[10px] font-semibold tracking-[0.24em] text-cyan-200 sm:text-xs">
@@ -503,7 +514,7 @@ export default function Home() {
         <div className="mx-auto max-w-7xl">
           <Suspense
             fallback={
-              <div className="mt-9 rounded-2xl border border-white/[0.08] bg-[#262626] px-6 py-12 text-center text-sm text-zinc-400">
+              <div className="mt-9 rounded-2xl border border-white/[0.08] bg-[#151d21] px-6 py-12 text-center text-sm text-zinc-400">
                 Đang tải sản phẩm...
               </div>
             }
@@ -514,7 +525,7 @@ export default function Home() {
       </section>
 
       <section className="px-5 py-16 sm:px-8 sm:py-20 lg:px-10">
-        <div className="relative mx-auto flex max-w-7xl flex-col items-center overflow-hidden rounded-3xl border border-cyan-100/[0.12] bg-[radial-gradient(ellipse_at_50%_0%,rgba(18,198,223,0.12),transparent_60%),linear-gradient(135deg,#242727,#1d1d1d_60%,#29221f)] px-6 py-12 text-center shadow-[0_30px_90px_-50px_rgba(18,198,223,0.3)] sm:px-12 sm:py-16">
+        <div className="hv-glass relative mx-auto flex max-w-7xl flex-col items-center overflow-hidden rounded-3xl border-cyan-100/[0.12] bg-[radial-gradient(ellipse_at_50%_0%,rgba(18,198,223,0.12),transparent_60%),linear-gradient(135deg,#172327,#101619_60%,#1d211a)] px-6 py-12 text-center shadow-[0_30px_90px_-50px_rgba(18,198,223,0.3)] sm:px-12 sm:py-16">
           <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-cyan-100/15 bg-cyan-100/[0.06] text-cyan-100">
             <Sparkles className="h-5 w-5" />
           </span>

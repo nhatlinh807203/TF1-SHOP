@@ -118,7 +118,7 @@ export default function RegisterPage() {
             </Link>
             <span
               aria-current="page"
-              className="flex-1 rounded-full bg-gradient-to-b from-[#d4a537]/25 to-[#d4a537]/10 py-2 text-center text-sm font-medium text-[#f0d68f] ring-1 ring-inset ring-[#d4a537]/40"
+              className="flex-1 rounded-full bg-cyan-100/[0.08] py-2 text-center text-sm font-medium text-cyan-100 ring-1 ring-inset ring-cyan-100/20"
             >
               Đăng ký
             </span>
@@ -232,7 +232,7 @@ export default function RegisterPage() {
                         key={i}
                         className={`h-1 flex-1 rounded-full transition-colors ${
                           i <= strength
-                            ? "bg-gradient-to-r from-[#e2bb52] to-[#f6dd8a]"
+                            ? "bg-gradient-to-r from-[#12c6df] to-[#64e6f4]"
                             : "bg-white/10"
                         }`}
                       />
@@ -261,7 +261,7 @@ export default function RegisterPage() {
                   className={`${inputClass} pr-12 ${mismatch ? "!border-red-500/50" : ""}`}
                 />
                 {confirm && !mismatch && (
-                  <Check className="absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#e2bb52]" />
+                  <Check className="absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-cyan-200" />
                 )}
               </div>
               {mismatch && <p className="mt-2 px-2 text-xs text-red-300">Mật khẩu xác nhận chưa khớp.</p>}
@@ -273,15 +273,15 @@ export default function RegisterPage() {
                 type="checkbox"
                 checked={agree}
                 onChange={(e) => setAgree(e.target.checked)}
-                className="mt-1 h-4 w-4 shrink-0 rounded border-white/20 bg-white/5 accent-[#d4a537]"
+                className="mt-1 h-4 w-4 shrink-0 rounded border-white/20 bg-white/5 accent-cyan-300"
               />
               <span>
                 Tôi đồng ý với{" "}
-                <Link href="/terms" className="text-[#e2bb52] transition-colors hover:text-[#f6dd8a]">
+                <Link href="/terms" className="text-cyan-200 transition-colors hover:text-cyan-100">
                   Điều khoản sử dụng
                 </Link>{" "}
                 và{" "}
-                <Link href="/privacy" className="text-[#e2bb52] transition-colors hover:text-[#f6dd8a]">
+                <Link href="/privacy" className="text-cyan-200 transition-colors hover:text-cyan-100">
                   Chính sách bảo mật
                 </Link>
                 .
@@ -291,7 +291,7 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={loading}
-              className="flex h-11 w-full items-center justify-center gap-2 rounded-full bg-gradient-to-b from-[#ecd07a] to-[#c9972a] text-sm font-semibold text-[#1a1205] shadow-[0_0_0_1px_rgba(255,236,170,0.35)_inset,0_6px_18px_-6px_rgba(212,165,55,0.6)] transition hover:brightness-110 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70"
+              className="flex h-11 w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#12c6df] to-[#64e6f4] text-sm font-semibold text-[#07191c] shadow-[0_6px_20px_-8px_rgba(18,198,223,0.5)] transition duration-300 hover:-translate-y-0.5 hover:brightness-110 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70"
             >
               {loading ? (
                 <>
@@ -321,7 +321,7 @@ export default function RegisterPage() {
 
         <p className="mt-7 text-center text-sm text-zinc-500">
           Đã có tài khoản?{" "}
-          <Link href="/login" className="font-semibold text-[#e2bb52] transition-colors hover:text-[#f6dd8a]">
+          <Link href="/login" className="font-semibold text-cyan-200 transition-colors hover:text-cyan-100">
             Đăng nhập
           </Link>
         </p>
